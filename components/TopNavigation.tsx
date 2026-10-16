@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'motion/react';
 import { useRtl } from '@/hooks/useRtl';
 
 interface TopNavigationProps {
@@ -80,23 +81,25 @@ export function TopNavigation({
         <div className="col-span-5 sm:col-span-7 lg:col-span-3 flex items-center justify-end gap-2.5 sm:gap-3 shrink-0">
           
           {/* Currency Toggle */}
-          <button
+          <motion.button
+            whileTap={{ scale: 0.95 }}
             onClick={onCurrencyToggle}
             type="button"
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B]"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B] cursor-pointer"
             title={isRtl ? 'تغيير عملة عرض الأسعار' : 'Switch pricing currency'}
           >
             <span className="text-[#7E8B7B]">
               {isRtl ? 'العملة:' : 'CURRENCY:'}
             </span>
             <span className="font-semibold text-[#C8FF47]">{currency}</span>
-          </button>
+          </motion.button>
 
           {/* Locale Toggle */}
-          <button
+          <motion.button
+            whileTap={{ scale: 0.95 }}
             onClick={onLocaleToggle}
             type="button"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B]"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B] cursor-pointer"
             title={isRtl ? 'Switch to English' : 'التبديل إلى العربية'}
             aria-label={isRtl ? 'Switch to English' : 'التبديل إلى العربية'}
           >
@@ -106,19 +109,22 @@ export function TopNavigation({
             <span className="font-semibold text-[#C8FF47]">
               {locale === 'en' ? 'EN' : 'العربية'}
             </span>
-          </button>
+          </motion.button>
 
           {/* Primary CTA */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={onInquiryClick}
             type="button"
-            className="px-3.5 sm:px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47]"
+            className="px-3.5 sm:px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer"
           >
             {isRtl ? 'تواصل معنا' : 'Contact Us'}
-          </button>
+          </motion.button>
 
           {/* Mobile hamburger button */}
-          <button
+          <motion.button
+            whileTap={{ scale: 0.92 }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             type="button"
             className="flex lg:hidden p-2 text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
@@ -136,47 +142,53 @@ export function TopNavigation({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
-          </button>
+          </motion.button>
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      {mobileMenuOpen && (
-        <div
-          dir={direction}
-          className="lg:hidden border-t border-[#242D25] bg-[#101310] px-6 py-4 space-y-4"
-        >
-          <div className="flex flex-col space-y-2.5 text-sm text-[#7E8B7B] text-start">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1.5 hover:text-[#EDEDE7] transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+      {/* Mobile drawer with smooth animation */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            dir={direction}
+            className="lg:hidden border-t border-[#242D25] bg-[#101310] px-6 py-4 space-y-4 overflow-hidden"
+          >
+            <div className="flex flex-col space-y-2.5 text-sm text-[#7E8B7B] text-start">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-1.5 hover:text-[#EDEDE7] transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
 
-          <div className="pt-3 border-t border-[#242D25] flex items-center justify-between gap-3">
-            <button
-              onClick={onCurrencyToggle}
-              type="button"
-              className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
-            >
-              {isRtl ? 'العملة:' : 'CURRENCY:'} <span className="text-[#C8FF47]">{currency}</span>
-            </button>
-            <button
-              onClick={onLocaleToggle}
-              type="button"
-              className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
-            >
-              {isRtl ? 'اللغة:' : 'LOCALE:'} <span className="text-[#C8FF47]">{locale === 'en' ? 'EN' : 'العربية'}</span>
-            </button>
-          </div>
-        </div>
-      )}
+            <div className="pt-3 border-t border-[#242D25] flex items-center justify-between gap-3">
+              <button
+                onClick={onCurrencyToggle}
+                type="button"
+                className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
+              >
+                {isRtl ? 'العملة:' : 'CURRENCY:'} <span className="text-[#C8FF47]">{currency}</span>
+              </button>
+              <button
+                onClick={onLocaleToggle}
+                type="button"
+                className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
+              >
+                {isRtl ? 'اللغة:' : 'LOCALE:'} <span className="text-[#C8FF47]">{locale === 'en' ? 'EN' : 'العربية'}</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'motion/react';
 import { SERVICES_CATALOGUE } from '@/lib/architecture-data';
 
 interface ServicesCatalogueProps {
@@ -8,6 +9,8 @@ interface ServicesCatalogueProps {
   locale: 'en' | 'ar';
   onSelectService: (serviceId: string) => void;
 }
+
+const easeCurve = [0.16, 1, 0.3, 1] as const;
 
 export function ServicesCatalogue({
   currency,
@@ -17,11 +20,17 @@ export function ServicesCatalogue({
   const isAr = locale === 'ar';
 
   return (
-    <section id="services" className="w-full border-b border-[#242D25] py-16 lg:py-24">
+    <section id="services" className="w-full border-b border-[#242D25] py-16 lg:py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, ease: easeCurve }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+        >
           <div>
             <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
               {isAr ? 'ما نقدمه' : 'What We Offer'}
@@ -35,16 +44,21 @@ export function ServicesCatalogue({
               ? 'يمكنك اختيار كل خدمة بمفردها، أو دمجها في باقة متكاملة لإدارة أعمالك على الإنترنت بسهولة وبدعم مستمر.'
               : 'Choose any service on its own, or combine them into a complete package to run your business online with peace of mind.'}
           </p>
-        </div>
+        </motion.div>
 
-        {/* Asymmetric Services Grid */}
+        {/* Asymmetric Services Grid with subtle card hover and entrance */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES_CATALOGUE.map((service, index) => {
             const isFeatured = index === 0 || index === 4;
             return (
-              <div
+              <motion.div
                 key={service.id}
-                className={`relative flex flex-col justify-between border border-[#242D25] bg-[#161B16] p-7 rounded transition-colors hover:border-[#7E8B7B] ${
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.06, ease: easeCurve }}
+                whileHover={{ y: -4, borderColor: '#7E8B7B' }}
+                className={`relative flex flex-col justify-between border border-[#242D25] bg-[#161B16] p-7 rounded transition-colors ${
                   isFeatured ? 'md:col-span-2 lg:col-span-1' : ''
                 }`}
               >
@@ -94,15 +108,17 @@ export function ServicesCatalogue({
                     </div>
                   </div>
 
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.03, borderColor: '#C8FF47', color: '#C8FF47' }}
+                    whileTap={{ scale: 0.97 }}
                     onClick={() => onSelectService(service.id)}
                     type="button"
-                    className="px-3.5 py-1.5 text-xs font-medium text-[#EDEDE7] border border-[#242D25] bg-[#101310] rounded hover:border-[#C8FF47] hover:text-[#C8FF47] transition-colors whitespace-nowrap shrink-0"
+                    className="px-3.5 py-1.5 text-xs font-medium text-[#EDEDE7] border border-[#242D25] bg-[#101310] rounded transition-colors whitespace-nowrap shrink-0"
                   >
                     {isAr ? 'طلب تفاصيل الخدمة' : 'Ask About This'}
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
