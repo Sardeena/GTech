@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-graphite: #101310;
+    --color-signal-lime: #C8FF47;
+    --color-warm-white: #EDEDE7;
+    --color-technical-muted: #7E8B7B;
+    --color-technical-dark: #161B16;
+    --color-technical-border: #242D25;
+    --color-technical-surface: #182019;
+  }
+
+  body {
+    background-color: #101310;
+    color: #EDEDE7;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Accessible focus indicators with Signal Lime outline */
+  *:focus-visible {
+    outline: 2px solid #C8FF47;
+    outline-offset: 2px;
+  }
+
+  /* Tabular numbers for all metrics, costs, dates, and ports */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

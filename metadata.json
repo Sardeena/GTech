@@ -1,0 +1,7 @@
+{
+  "name": "Gonnsen Tech — Architecture & Infrastructure Ecosystem",
+  "description": "Architectural foundation and engineering platform for Gonnsen Tech: enterprise infrastructure, custom web platforms, software rentals, cloud hosting, and managed IT services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
