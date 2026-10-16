@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { SERVICES_CATALOGUE, ServiceVertical } from '@/lib/architecture-data';
+import { SERVICES_CATALOGUE } from '@/lib/architecture-data';
 
 interface ServicesCatalogueProps {
   currency: 'EGP' | 'USD';
@@ -24,14 +24,16 @@ export function ServicesCatalogue({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
-              Capabilities & Offerings
+              {isAr ? 'ما نقدمه' : 'What We Offer'}
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#EDEDE7]">
-              Six Mission-Critical Verticals
+              {isAr ? 'الخدمات الأساسية للشركات' : 'Our Core Services'}
             </h2>
           </div>
           <p className="text-sm text-[#7E8B7B] max-w-md">
-            Engineered as discrete, decoupled infrastructure units. Every contract can be deployed standalone or unified under a master service agreement.
+            {isAr
+              ? 'يمكنك اختيار كل خدمة بمفردها، أو دمجها في باقة متكاملة لإدارة أعمالك على الإنترنت بسهولة وبدعم مستمر.'
+              : 'Choose any service on its own, or combine them into a complete package to run your business online with peace of mind.'}
           </p>
         </div>
 
@@ -47,7 +49,7 @@ export function ServicesCatalogue({
                 }`}
               >
                 <div>
-                  {/* Top line: Editorial Index + Category */}
+                  {/* Top line: Index + Category */}
                   <div className="flex items-center justify-between text-xs font-mono text-[#7E8B7B] mb-4">
                     <span className="text-[#C8FF47] font-semibold text-sm">
                       {service.number}.
@@ -63,14 +65,14 @@ export function ServicesCatalogue({
                     {service.tagline}
                   </p>
 
-                  <p className="text-sm text-[#EDEDE7]/80 leading-relaxed mb-6">
+                  <p className="text-sm text-[#EDEDE7]/85 leading-relaxed mb-6">
                     {service.description}
                   </p>
 
                   {/* Deliverables List (unboxed, clean typographic structure) */}
                   <div className="space-y-2 mb-6 border-t border-[#242D25] pt-4">
                     <div className="text-xs font-mono text-[#7E8B7B] uppercase">
-                      Architecture Inclusions:
+                      {isAr ? 'ما تتضمنه الخدمة:' : 'What is included:'}
                     </div>
                     {service.keyDeliverables.map((item, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs text-[#EDEDE7]/90 leading-tight">
@@ -85,7 +87,7 @@ export function ServicesCatalogue({
                 <div className="pt-4 border-t border-[#242D25] flex items-center justify-between gap-4">
                   <div>
                     <div className="text-[10px] font-mono text-[#7E8B7B] uppercase">
-                      Base Rate ({currency})
+                      {isAr ? `الأسعار (${currency})` : `Starting at (${currency})`}
                     </div>
                     <div className="text-sm font-bold font-mono tabular-nums text-[#EDEDE7]">
                       {currency === 'EGP' ? service.pricingEgp : service.pricingUsd}
@@ -97,7 +99,7 @@ export function ServicesCatalogue({
                     type="button"
                     className="px-3.5 py-1.5 text-xs font-medium text-[#EDEDE7] border border-[#242D25] bg-[#101310] rounded hover:border-[#C8FF47] hover:text-[#C8FF47] transition-colors whitespace-nowrap shrink-0"
                   >
-                    Configure Scope
+                    {isAr ? 'طلب تفاصيل الخدمة' : 'Ask About This'}
                   </button>
                 </div>
               </div>

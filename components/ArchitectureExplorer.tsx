@@ -6,7 +6,6 @@ import {
   ECOSYSTEM_SURFACES,
   DATABASE_CLUSTERS,
   UNRESOLVED_DEPENDENCIES,
-  DESIGN_TOKENS,
 } from '@/lib/architecture-data';
 
 interface ArchitectureExplorerProps {
@@ -31,17 +30,17 @@ export function ArchitectureExplorer({
         {/* Section Header */}
         <div className="mb-10">
           <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
-            Phase 0 Architectural Foundation
+            System Architecture
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#EDEDE7]">
-            Technical Blueprint & System Topology
+            How the System Works Behind the Scenes
           </h2>
           <p className="mt-2 text-sm text-[#7E8B7B] max-w-3xl">
-            A real, maintainable business platform. Below is the complete interactive specification for the three connected surfaces, PostgreSQL data model, security perimeter, and rollout roadmap.
+            Everything is designed to be clear, secure, and easy to maintain. Explore how our public website, client portal, databases, and safety rules work together.
           </p>
         </div>
 
-        {/* Interactive Tab Bar (Clean segmented control, zero pills) */}
+        {/* Interactive Tab Bar */}
         <div className="flex items-center gap-2 overflow-x-auto border-b border-[#242D25] pb-4 mb-8">
           <button
             onClick={() => setActiveTab('ecosystem')}
@@ -52,7 +51,7 @@ export function ArchitectureExplorer({
                 : 'text-[#7E8B7B] bg-[#161B16] border border-[#242D25] hover:text-[#EDEDE7]'
             }`}
           >
-            1. Three-Surface Topology
+            1. Three Connected Areas
           </button>
           
           <button
@@ -64,7 +63,7 @@ export function ArchitectureExplorer({
                 : 'text-[#7E8B7B] bg-[#161B16] border border-[#242D25] hover:text-[#EDEDE7]'
             }`}
           >
-            2. Relational Schema (12 Clusters)
+            2. How Data is Stored
           </button>
 
           <button
@@ -76,7 +75,7 @@ export function ArchitectureExplorer({
                 : 'text-[#7E8B7B] bg-[#161B16] border border-[#242D25] hover:text-[#EDEDE7]'
             }`}
           >
-            3. Zero-Trust Security & RLS
+            3. How We Protect Data
           </button>
 
           <button
@@ -88,7 +87,7 @@ export function ArchitectureExplorer({
                 : 'text-[#7E8B7B] bg-[#161B16] border border-[#242D25] hover:text-[#EDEDE7]'
             }`}
           >
-            4. Egypt & Global I18n Engine
+            4. Pricing & Arabic Support
           </button>
 
           <button
@@ -100,11 +99,11 @@ export function ArchitectureExplorer({
                 : 'text-[#7E8B7B] bg-[#161B16] border border-[#242D25] hover:text-[#EDEDE7]'
             }`}
           >
-            5. Roadmap & Dependencies
+            5. Roadmap & Next Steps
           </button>
         </div>
 
-        {/* TAB 1: THREE-SURFACE ECOSYSTEM */}
+        {/* TAB 1: THREE CONNECTED AREAS */}
         {activeTab === 'ecosystem' && (
           <div className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -120,7 +119,7 @@ export function ArchitectureExplorer({
                   }`}
                 >
                   <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-2">
-                    Surface 0{idx + 1}
+                    Section 0{idx + 1}
                   </div>
                   <h3 className="text-lg font-bold text-[#EDEDE7] mb-2">
                     {surface.name}
@@ -129,7 +128,7 @@ export function ArchitectureExplorer({
                     {surface.primaryPurpose}
                   </p>
                   <div className="text-[11px] font-mono text-[#C8FF47]">
-                    Auth: {surface.authRequirement.split(';')[0]}
+                    Access: {surface.authRequirement.split(';')[0]}
                   </div>
                 </button>
               ))}
@@ -140,14 +139,14 @@ export function ArchitectureExplorer({
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#242D25] pb-5 mb-6">
                 <div>
                   <div className="text-xs font-mono text-[#C8FF47] uppercase">
-                    Surface Detail Specification
+                    Platform Details
                   </div>
                   <h4 className="text-2xl font-bold text-[#EDEDE7]">
                     {ECOSYSTEM_SURFACES[selectedSurfaceIndex].name}
                   </h4>
                 </div>
                 <div className="text-xs text-[#7E8B7B] font-mono">
-                  Target Audience: {ECOSYSTEM_SURFACES[selectedSurfaceIndex].audience}
+                  Who uses this: {ECOSYSTEM_SURFACES[selectedSurfaceIndex].audience}
                 </div>
               </div>
 
@@ -155,12 +154,12 @@ export function ArchitectureExplorer({
                 {/* Route Inventory */}
                 <div>
                   <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-3">
-                    Route Inventory (Next.js 15 App Router):
+                    Page Links (Next.js 15):
                   </div>
                   <div className="bg-[#101310] border border-[#242D25] rounded p-4 space-y-2 font-mono text-xs text-[#EDEDE7]">
                     {ECOSYSTEM_SURFACES[selectedSurfaceIndex].routes.map((route, rIdx) => (
                       <div key={rIdx} className="flex items-center gap-2">
-                        <span className="text-[#C8FF47]">GET</span>
+                        <span className="text-[#C8FF47]">URL</span>
                         <span>{route}</span>
                       </div>
                     ))}
@@ -170,7 +169,7 @@ export function ArchitectureExplorer({
                 {/* Architectural Capabilities */}
                 <div>
                   <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-3">
-                    Architectural Invariants & Capabilities:
+                    What this platform provides:
                   </div>
                   <div className="space-y-3">
                     {ECOSYSTEM_SURFACES[selectedSurfaceIndex].capabilities.map((cap, cIdx) => (
@@ -189,23 +188,23 @@ export function ArchitectureExplorer({
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div className="lg:col-span-5">
                   <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-1">
-                    Backbone Architecture
+                    Network Routing
                   </div>
                   <h4 className="text-xl font-bold text-[#EDEDE7] mb-3">
-                    North Africa & Europe Low-Latency Mesh
+                    Fast Link Between North Africa & Europe
                   </h4>
-                  <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-4">
-                    Gonnsen Tech links local Cairo fiber backbones with European cloud transit via Mediterranean subsea cables. Traffic from Egyptian enterprises reaches compute clusters in sub-45ms round-trips.
+                  <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
+                    Gonnsen Tech connects local servers in Cairo with fast European cloud transit via Mediterranean fiber cables. Your websites and apps load quickly whether your customers are in Egypt or overseas.
                   </p>
                   <div className="text-xs font-mono text-[#C8FF47]">
-                    Transit Nodes: Cairo RDH · Alexandria · Marseille · Frankfurt
+                    Connection Points: Cairo · Alexandria · Marseille · Frankfurt
                   </div>
                 </div>
 
                 <div className="lg:col-span-7 relative h-64 rounded border border-[#242D25] overflow-hidden">
                   <Image
                     src="/src/assets/images/gonnsen_network_topology_1792191987452.jpg"
-                    alt="Network transit diagram between North Africa and Europe"
+                    alt="Network connection map between North Africa and Europe"
                     fill
                     className="object-cover"
                     referrerPolicy="no-referrer"
@@ -217,7 +216,7 @@ export function ArchitectureExplorer({
           </div>
         )}
 
-        {/* TAB 2: RELATIONAL DATA MODEL */}
+        {/* TAB 2: HOW DATA IS STORED */}
         {activeTab === 'data-model' && (
           <div className="space-y-6" id="data-model">
             {/* Cluster Selector Tabs */}
@@ -233,7 +232,7 @@ export function ArchitectureExplorer({
                       : 'bg-[#161B16] text-[#7E8B7B] border border-[#242D25] hover:text-[#EDEDE7]'
                   }`}
                 >
-                  Cluster 0{cIdx + 1}: {cluster.name}
+                  Section 0{cIdx + 1}: {cluster.name}
                 </button>
               ))}
             </div>
@@ -243,7 +242,7 @@ export function ArchitectureExplorer({
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#242D25] pb-4 mb-6">
                 <div>
                   <div className="text-xs font-mono text-[#C8FF47] uppercase">
-                    Cluster {DATABASE_CLUSTERS[selectedClusterIndex].domainNumber}
+                    Database Group {DATABASE_CLUSTERS[selectedClusterIndex].domainNumber}
                   </div>
                   <h4 className="text-2xl font-bold text-[#EDEDE7]">
                     {DATABASE_CLUSTERS[selectedClusterIndex].name}
@@ -253,7 +252,7 @@ export function ArchitectureExplorer({
                   </p>
                 </div>
                 <div className="text-xs font-mono text-[#7E8B7B] bg-[#101310] px-3 py-2 border border-[#242D25] rounded">
-                  PostgreSQL / Supabase Schema
+                  PostgreSQL Database
                 </div>
               </div>
 
@@ -274,8 +273,8 @@ export function ArchitectureExplorer({
                       {tbl.keyFields.map((field, fIdx) => (
                         <div key={fIdx} className="flex items-center justify-between py-1 border-b border-[#242D25]/40 last:border-0">
                           <span className="text-[#EDEDE7] flex items-center gap-1.5">
-                            {field.isPk && <span className="text-[#C8FF47] text-[10px]">PK</span>}
-                            {field.isFk && <span className="text-[#7E8B7B] text-[10px]">FK</span>}
+                            {field.isPk && <span className="text-[#C8FF47] text-[10px]">KEY</span>}
+                            {field.isFk && <span className="text-[#7E8B7B] text-[10px]">LINK</span>}
                             {field.name}
                           </span>
                           <span className="text-[#7E8B7B] text-[11px]">
@@ -289,10 +288,10 @@ export function ArchitectureExplorer({
                 ))}
               </div>
 
-              {/* RLS Policy Rule */}
+              {/* Security Policy Rule */}
               <div className="bg-[#101310] border border-[#242D25] p-4 rounded text-xs">
                 <span className="font-mono text-[#C8FF47] uppercase font-semibold mr-2">
-                  Database RLS Policy:
+                  Access Rule:
                 </span>
                 <span className="text-[#EDEDE7]/90 font-mono">
                   {DATABASE_CLUSTERS[selectedClusterIndex].rlsPolicySummary}
@@ -302,59 +301,59 @@ export function ArchitectureExplorer({
           </div>
         )}
 
-        {/* TAB 3: SECURITY & RLS */}
+        {/* TAB 3: HOW WE PROTECT DATA */}
         {activeTab === 'security' && (
           <div className="space-y-8" id="security">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               
               <div className="border border-[#242D25] bg-[#161B16] p-6 rounded">
                 <div className="text-xs font-mono text-[#C8FF47] uppercase mb-2">
-                  Boundary 01
+                  Protection 01
                 </div>
                 <h4 className="text-lg font-bold text-[#EDEDE7] mb-3">
-                  Least-Privilege RBAC Matrix
+                  Clear Team Permissions
                 </h4>
-                <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-4">
-                  Organization-level hierarchy: <strong className="text-[#EDEDE7]">Owner</strong>, <strong className="text-[#EDEDE7]">Admin</strong>, <strong className="text-[#EDEDE7]">Billing Manager</strong>, and <strong className="text-[#EDEDE7]">Technical Contact</strong>.
+                <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
+                  Team members only see what they need to. You can assign roles like Owner, Admin, Billing Manager, or Technical Contact.
                 </p>
                 <div className="text-xs text-[#7E8B7B] space-y-1 font-mono">
-                  <div>• Billing cannot alter DNS / VPS</div>
-                  <div>• Technical contact cannot view invoices</div>
-                  <div>• Staff actions strictly audit-logged</div>
+                  <div>• Billing staff cannot alter server settings</div>
+                  <div>• Tech staff cannot view bank receipts</div>
+                  <div>• Important changes are safely logged</div>
                 </div>
               </div>
 
               <div className="border border-[#242D25] bg-[#161B16] p-6 rounded">
                 <div className="text-xs font-mono text-[#C8FF47] uppercase mb-2">
-                  Boundary 02
+                  Protection 02
                 </div>
                 <h4 className="text-lg font-bold text-[#EDEDE7] mb-3">
-                  Database-Enforced RLS
+                  Strict Customer Separation
                 </h4>
-                <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-4">
-                  Zero client trust. PostgreSQL Row-Level Security validates every query against <code className="text-[#C8FF47]">auth.uid()</code> and verified <code className="text-[#C8FF47]">organization_memberships</code>.
+                <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
+                  The database checks who is logged in on every request. It is impossible for one customer to view another customer’s data.
                 </p>
                 <div className="text-xs text-[#7E8B7B] space-y-1 font-mono">
-                  <div>• Cross-tenant leakage impossible</div>
-                  <div>• Multi-tenant schema isolation</div>
-                  <div>• Automatic query filtration</div>
+                  <div>• Complete privacy for your business</div>
+                  <div>• Separate spaces for rented software</div>
+                  <div>• Verified user sessions on every click</div>
                 </div>
               </div>
 
               <div className="border border-[#242D25] bg-[#161B16] p-6 rounded">
                 <div className="text-xs font-mono text-[#C8FF47] uppercase mb-2">
-                  Boundary 03
+                  Protection 03
                 </div>
                 <h4 className="text-lg font-bold text-[#EDEDE7] mb-3">
-                  Cryptographic HMAC Webhooks
+                  Verified Payment Webhooks
                 </h4>
-                <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-4">
-                  All payment and infrastructure webhooks (Paymob, Stripe, Registrar APIs) are validated with SHA-512 HMAC signatures before processing.
+                <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
+                  All payment confirmations from Paymob or Stripe are digitally verified with a private secret key before marking any invoice as paid.
                 </p>
                 <div className="text-xs text-[#7E8B7B] space-y-1 font-mono">
-                  <div>• Idempotent transaction keys</div>
-                  <div>• Replay attack prevention</div>
-                  <div>• Raw payload audit storage</div>
+                  <div>• Protects against fake payment attempts</div>
+                  <div>• Prevents duplicate payment processing</div>
+                  <div>• Complete receipt records for accounting</div>
                 </div>
               </div>
 
@@ -363,35 +362,33 @@ export function ArchitectureExplorer({
             {/* Secret Management Matrix */}
             <div className="border border-[#242D25] bg-[#161B16] p-7 rounded">
               <h4 className="text-lg font-bold text-[#EDEDE7] mb-4">
-                Secret Isolation Policy (Environment Boundaries)
+                How We Keep Passwords & Keys Safe
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-mono">
                 <div className="bg-[#101310] border border-[#242D25] p-4 rounded">
                   <div className="text-[#C8FF47] font-semibold mb-2">
-                    CLIENT BUNDLE (NEXT_PUBLIC_*)
+                    SAFE PUBLIC WEBSITE KEYS
                   </div>
                   <div className="space-y-1.5 text-[#7E8B7B]">
-                    <div>NEXT_PUBLIC_APP_URL</div>
-                    <div>NEXT_PUBLIC_SUPABASE_URL</div>
-                    <div>NEXT_PUBLIC_SUPABASE_ANON_KEY</div>
-                    <div className="text-amber-400/80 pt-2 font-sans">
-                      ⚠️ Zero elevated privileges; strictly public identifiers.
+                    <div>Website address (NEXT_PUBLIC_APP_URL)</div>
+                    <div>Public database address (read-only)</div>
+                    <div className="text-emerald-400/90 pt-2 font-sans">
+                      ✓ Only safe, non-sensitive public details are sent to web browsers.
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-[#101310] border border-[#242D25] p-4 rounded">
                   <div className="text-[#C8FF47] font-semibold mb-2">
-                    SERVER-ONLY RUNTIME SECRETS (SECURE)
+                    PRIVATE SERVER SECRETS (NEVER SHARED)
                   </div>
                   <div className="space-y-1.5 text-[#7E8B7B]">
-                    <div>SUPABASE_SERVICE_ROLE_KEY</div>
-                    <div>PAYMOB_API_KEY & PAYMOB_HMAC_SECRET</div>
-                    <div>STRIPE_SECRET_KEY & STRIPE_WEBHOOK_SECRET</div>
-                    <div>REGISTRAR_API_SECRET</div>
-                    <div>INFRASTRUCTURE_PROVISIONER_TOKEN</div>
-                    <div className="text-emerald-400/80 pt-2 font-sans">
-                      🔒 Never bundled in client JS; executed only in server actions.
+                    <div>Paymob merchant keys & signature passwords</div>
+                    <div>Stripe payment secret keys</div>
+                    <div>Domain registrar administrative keys</div>
+                    <div>Server hypervisor root tokens</div>
+                    <div className="text-emerald-400/90 pt-2 font-sans">
+                      🔒 Strictly stored on our secure servers; never sent to the browser.
                     </div>
                   </div>
                 </div>
@@ -400,54 +397,54 @@ export function ArchitectureExplorer({
           </div>
         )}
 
-        {/* TAB 4: I18N & DUAL-CURRENCY */}
+        {/* TAB 4: PRICING & ARABIC SUPPORT */}
         {activeTab === 'i18n' && (
           <div className="space-y-8">
             <div className="border border-[#242D25] bg-[#161B16] p-7 rounded">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#242D25] pb-5 mb-6">
                 <div>
                   <div className="text-xs font-mono text-[#C8FF47] uppercase">
-                    Localization & Financial Architecture
+                    Localization & Currency
                   </div>
                   <h4 className="text-2xl font-bold text-[#EDEDE7]">
-                    Egypt (EGP) & Global (USD) Dual-Currency Engine
+                    Egypt (EGP) & Global (USD) Dual Pricing
                   </h4>
                 </div>
                 <div className="text-xs font-mono text-[#7E8B7B]">
-                  Distinguishing Display Currency vs Transaction Currency
+                  No hidden exchange rate surprises
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-sm">
                 <div>
                   <h5 className="font-bold text-[#EDEDE7] mb-2">
-                    Critical Currency Policy:
+                    Honest, Clear Pricing Policy:
                   </h5>
-                  <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-4">
-                    Gonnsen Tech does not assume that a displayed exchange-rate conversion is the amount a payment provider will charge.
+                  <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
+                    We keep billing simple and transparent. We never use confusing exchange rates that leave you paying more at checkout.
                   </p>
                   <div className="space-y-2 text-xs text-[#7E8B7B]">
                     <div className="p-3 bg-[#101310] border border-[#242D25] rounded">
-                      <strong className="text-[#EDEDE7]">Domestic Egypt Settlement:</strong> Invoiced and charged natively in Egyptian Pounds (EGP). Fully compliant with Central Bank of Egypt regulations and domestic debit/credit processing.
+                      <strong className="text-[#EDEDE7]">Domestic Egyptian Clients:</strong> Billed directly in Egyptian Pounds (EGP). Pay easily using local debit cards, credit cards, Meeza, or mobile wallets (like Vodafone Cash and InstaPay).
                     </div>
                     <div className="p-3 bg-[#101310] border border-[#242D25] rounded">
-                      <strong className="text-[#EDEDE7]">International Settlement:</strong> Invoiced and settled in United States Dollars (USD) via Stripe Global.
+                      <strong className="text-[#EDEDE7]">International Clients:</strong> Invoiced and settled in US Dollars (USD) via Stripe.
                     </div>
                   </div>
                 </div>
 
                 <div>
                   <h5 className="font-bold text-[#EDEDE7] mb-2">
-                    Arabic (ar_EG) First-Class RTL Strategy:
+                    Arabic as a First-Class Language:
                   </h5>
-                  <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-4">
-                    Arabic is a first-class language, not an afterthought. Layouts respect bidirectional text direction (&apos;dir=&quot;rtl&quot;&apos;), typographic balance, and culturally accurate financial formatting.
+                  <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
+                    Arabic is fully supported throughout the system. The layout naturally mirrors from right to left, with comfortable spacing and clear Arabic fonts.
                   </p>
                   <div className="bg-[#101310] border border-[#242D25] p-4 rounded font-mono text-xs text-[#EDEDE7] space-y-1.5">
-                    <div>HTML dir: rtl</div>
-                    <div>Locale Tag: ar-EG</div>
-                    <div>Number Format: Intl.NumberFormat(&apos;ar-EG&apos;, &#123; currency: &apos;EGP&apos; &#125;)</div>
-                    <div>Font Stack: Cairo / IBM Plex Sans Arabic fallback</div>
+                    <div>Text Flow: Right to Left (RTL)</div>
+                    <div>Country Code: Egypt (ar-EG)</div>
+                    <div>Number Format: Local Egyptian format (e.g. 45,000 ج.م)</div>
+                    <div>Clean Arabic typography designed for easy reading</div>
                   </div>
                 </div>
               </div>
@@ -455,7 +452,7 @@ export function ArchitectureExplorer({
           </div>
         )}
 
-        {/* TAB 5: ROADMAP & DEPENDENCIES */}
+        {/* TAB 5: ROADMAP & NEXT STEPS */}
         {activeTab === 'roadmap' && (
           <div className="space-y-8" id="roadmap">
             {/* Phased Roadmap Timeline */}
@@ -467,13 +464,13 @@ export function ArchitectureExplorer({
                   <span className="font-bold">CURRENT</span>
                 </div>
                 <h4 className="text-base font-bold text-[#EDEDE7] mb-2">
-                  Foundation & Architecture
+                  Foundation & Planning
                 </h4>
                 <div className="text-xs text-[#7E8B7B] space-y-1">
-                  <div>✓ System topology</div>
-                  <div>✓ 12-domain data model</div>
-                  <div>✓ Custom design tokens</div>
-                  <div>✓ Zero-pill visual rules</div>
+                  <div>✓ System design</div>
+                  <div>✓ Database structure</div>
+                  <div>✓ Clean design tokens</div>
+                  <div>✓ Bilingual layout setup</div>
                 </div>
               </div>
 
@@ -482,13 +479,13 @@ export function ArchitectureExplorer({
                   PHASE 1
                 </div>
                 <h4 className="text-base font-bold text-[#EDEDE7] mb-2">
-                  Public Platform & SEO
+                  Public Website & Services
                 </h4>
                 <div className="text-xs text-[#7E8B7B] space-y-1">
                   <div>• 6 dedicated service pages</div>
-                  <div>• Real case study profiles</div>
-                  <div>• Interactive RFP engine</div>
-                  <div>• Schema.org JSON-LD</div>
+                  <div>• Real project case studies</div>
+                  <div>• Project cost estimator</div>
+                  <div>• Search engine optimization</div>
                 </div>
               </div>
 
@@ -497,13 +494,13 @@ export function ArchitectureExplorer({
                   PHASE 2
                 </div>
                 <h4 className="text-base font-bold text-[#EDEDE7] mb-2">
-                  Client Portal
+                  Client Dashboard
                 </h4>
                 <div className="text-xs text-[#7E8B7B] space-y-1">
-                  <div>• Supabase authentication</div>
-                  <div>• DNS editor & VPS telemetry</div>
-                  <div>• Support ticket SLAs</div>
-                  <div>• Tenant configuration</div>
+                  <div>• Secure client login</div>
+                  <div>• Domain & server controls</div>
+                  <div>• Fast support tickets</div>
+                  <div>• Manage software rentals</div>
                 </div>
               </div>
 
@@ -512,12 +509,12 @@ export function ArchitectureExplorer({
                   PHASE 3
                 </div>
                 <h4 className="text-base font-bold text-[#EDEDE7] mb-2">
-                  Billing & Internal Ops
+                  Billing & Internal Tools
                 </h4>
                 <div className="text-xs text-[#7E8B7B] space-y-1">
-                  <div>• Paymob & Stripe webhooks</div>
-                  <div>• 14% Egypt VAT invoicing</div>
-                  <div>• Provisioning queues</div>
+                  <div>• Paymob & Stripe checkouts</div>
+                  <div>• Official 14% Egypt VAT receipts</div>
+                  <div>• Automatic server setup</div>
                   <div>• Internal staff console</div>
                 </div>
               </div>
@@ -527,7 +524,7 @@ export function ArchitectureExplorer({
             {/* Unresolved Business Decisions Table */}
             <div className="border border-[#242D25] bg-[#161B16] p-7 rounded">
               <h4 className="text-lg font-bold text-[#EDEDE7] mb-4">
-                Unresolved External Dependencies & Business Decisions
+                What We Are Finalizing Next
               </h4>
               <div className="space-y-4">
                 {UNRESOLVED_DEPENDENCIES.map((dep) => (
@@ -541,11 +538,11 @@ export function ArchitectureExplorer({
                         {dep.urgency}
                       </div>
                     </div>
-                    <p className="text-xs text-[#EDEDE7]/80 mb-2">
+                    <p className="text-xs text-[#EDEDE7]/85 mb-2">
                       {dep.detail}
                     </p>
                     <div className="text-xs text-[#7E8B7B] font-mono">
-                      Phase 0/1 Mitigation: {dep.alternative}
+                      Current Solution: {dep.alternative}
                     </div>
                   </div>
                 ))}

@@ -29,23 +29,21 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
     setErrorMessage('');
 
     if (!formData.fullName.trim() || !formData.email.trim() || !formData.requirements.trim()) {
-      setErrorMessage('Please provide your name, corporate email, and project requirements summary.');
+      setErrorMessage('Please enter your name, work email, and a short note about what you need.');
       return;
     }
 
-    // Basic email validation
     if (!formData.email.includes('@') || !formData.email.includes('.')) {
-      setErrorMessage('Please enter a valid business email address.');
+      setErrorMessage('Please enter a valid email address.');
       return;
     }
 
     setIsSubmitting(true);
 
-    // Simulate reliable dispatch
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 400);
+    }, 350);
   };
 
   const handleReset = () => {
@@ -69,13 +67,13 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
-            Engagement & Onboarding
+            Contact Our Team
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#EDEDE7]">
-            Initiate a Technical Project Inquiry
+            Tell Us About Your Project
           </h2>
           <p className="mt-2 text-sm text-[#7E8B7B] max-w-xl mx-auto">
-            Direct communication with our systems engineering team. We review architectural requirements and respond with a formal technical scope within 24 hours.
+            Send us a message and our engineering team will get back to you with a clear project scope and honest price estimate within one business day.
           </p>
         </div>
 
@@ -86,13 +84,13 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                 ✓
               </div>
               <h3 className="text-2xl font-bold text-[#EDEDE7]">
-                Inquiry Logged & Assigned
+                Thank You! We Received Your Message
               </h3>
               <p className="text-sm text-[#7E8B7B] max-w-md mx-auto">
-                Thank you, <span className="text-[#EDEDE7] font-semibold">{formData.fullName}</span>. Your request for <span className="text-[#C8FF47]">{formData.organization || 'your organization'}</span> has been recorded in our intake pipeline.
+                Thank you, <span className="text-[#EDEDE7] font-semibold">{formData.fullName}</span>. We saved your project details for <span className="text-[#C8FF47]">{formData.organization || 'your business'}</span>. One of our engineers will reach out to you directly.
               </p>
               <div className="p-4 bg-[#101310] border border-[#242D25] rounded max-w-sm mx-auto font-mono text-xs text-[#7E8B7B]">
-                Assigned SLA: Initial review within 12 business hours
+                We usually reply within 12 business hours.
               </div>
               <div className="pt-4">
                 <button
@@ -100,7 +98,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                   type="button"
                   className="px-5 py-2 text-xs font-semibold text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors"
                 >
-                  Submit Another Inquiry
+                  Send Another Message
                 </button>
               </div>
             </div>
@@ -113,10 +111,10 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                 </div>
               )}
 
-              {/* Service vertical selector */}
+              {/* Service selector */}
               <div>
                 <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                  Target Service Vertical *
+                  What service do you need? *
                 </label>
                 <select
                   value={formData.serviceVertical}
@@ -125,7 +123,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                 >
                   {SERVICES_CATALOGUE.map((s) => (
                     <option key={s.id} value={s.id}>
-                      {s.number}. {s.title} ({s.category})
+                      {s.number}. {s.title}
                     </option>
                   ))}
                 </select>
@@ -135,7 +133,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                    Full Name *
+                    Your Name *
                   </label>
                   <input
                     type="text"
@@ -149,7 +147,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
 
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                    Corporate Email *
+                    Work Email *
                   </label>
                   <input
                     type="email"
@@ -162,24 +160,24 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                 </div>
               </div>
 
-              {/* Organization & Country */}
+              {/* Company & Country */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                    Company / Organization
+                    Company Name
                   </label>
                   <input
                     type="text"
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    placeholder="e.g. Nile Logistics Group"
+                    placeholder="e.g. Nile Logistics"
                     className="w-full bg-[#101310] border border-[#242D25] text-sm text-[#EDEDE7] rounded px-4 py-2.5 focus:border-[#C8FF47] focus:outline-none"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                    Operating Jurisdiction
+                    Where is your business based?
                   </label>
                   <select
                     value={formData.country}
@@ -187,11 +185,11 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                     className="w-full bg-[#101310] border border-[#242D25] text-sm text-[#EDEDE7] rounded px-4 py-2.5 focus:border-[#C8FF47] focus:outline-none"
                   >
                     <option value="EG">Egypt (Domestic - EGP Billing)</option>
-                    <option value="AE">United Arab Emirates (USD / AED)</option>
-                    <option value="SA">Saudi Arabia (USD / SAR)</option>
-                    <option value="GB">United Kingdom (USD / GBP)</option>
-                    <option value="EU">European Union (EUR / USD)</option>
-                    <option value="US">United States & Global (USD)</option>
+                    <option value="AE">United Arab Emirates</option>
+                    <option value="SA">Saudi Arabia</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="EU">European Union</option>
+                    <option value="US">United States & Worldwide</option>
                   </select>
                 </div>
               </div>
@@ -200,7 +198,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                    Phone / WhatsApp (Optional)
+                    Phone or WhatsApp (Optional)
                   </label>
                   <input
                     type="tel"
@@ -213,7 +211,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
 
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                    Estimated Budget Target ({currency})
+                    Estimated Budget ({currency})
                   </label>
                   <select
                     value={formData.budgetRange}
@@ -225,14 +223,14 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                         <option value="25k_50k">25,000 – 50,000 EGP</option>
                         <option value="50k_100k">50,000 – 100,000 EGP</option>
                         <option value="100k_250k">100,000 – 250,000 EGP</option>
-                        <option value="250k_plus">250,000+ EGP (Enterprise SLA)</option>
+                        <option value="250k_plus">250,000+ EGP (Enterprise)</option>
                       </>
                     ) : (
                       <>
                         <option value="1k_2k">$1,000 – $2,500 USD</option>
                         <option value="2k_5k">$2,500 – $5,000 USD</option>
                         <option value="5k_10k">$5,000 – $10,000 USD</option>
-                        <option value="10k_plus">$10,000+ USD (Enterprise SLA)</option>
+                        <option value="10k_plus">$10,000+ USD (Enterprise)</option>
                       </>
                     )}
                   </select>
@@ -242,14 +240,14 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
               {/* Requirements Summary */}
               <div>
                 <label className="block text-xs font-mono uppercase text-[#7E8B7B] mb-2">
-                  Technical Scope & Objectives *
+                  Tell us a bit about what you need *
                 </label>
                 <textarea
                   required
                   rows={4}
                   value={formData.requirements}
                   onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
-                  placeholder="Outline your project requirements, current technical stack, and anticipated timeline..."
+                  placeholder="What are you looking to build, what challenges are you facing, and what is your timeline?"
                   className="w-full bg-[#101310] border border-[#242D25] text-sm text-[#EDEDE7] rounded px-4 py-3 focus:border-[#C8FF47] focus:outline-none"
                 />
               </div>
@@ -257,14 +255,14 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
               {/* Submit CTA */}
               <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="text-[11px] text-[#7E8B7B] font-mono">
-                  No sales spam. Evaluated strictly by Gonnsen infrastructure engineers.
+                  No marketing spam. Handled directly by our engineering group.
                 </div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors disabled:opacity-50 whitespace-nowrap"
                 >
-                  {isSubmitting ? 'Transmitting Scope...' : 'Transmit Project Inquiry'}
+                  {isSubmitting ? 'Sending Details...' : 'Send Project Inquiry'}
                 </button>
               </div>
 

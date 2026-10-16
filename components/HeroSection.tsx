@@ -16,15 +16,15 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
     <section className="relative w-full border-b border-[#242D25] pt-12 pb-16 lg:pt-16 lg:pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
-        {/* Top unboxed metadata kicker with typographic separators */}
+        {/* Top unboxed metadata kicker with simple typographic separators */}
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono tracking-wider text-[#7E8B7B] uppercase mb-6">
-          <span>Enterprise Infrastructure</span>
+          <span>Reliable Web Technology</span>
           <span aria-hidden="true">·</span>
-          <span>Cairo & Global Transit</span>
+          <span>Cairo & Worldwide</span>
           <span aria-hidden="true">·</span>
-          <span>Phase 0 Architecture</span>
+          <span>Carefully Planned Architecture</span>
           <span aria-hidden="true">·</span>
-          <span className="text-[#C8FF47]">Ready for Implementation</span>
+          <span className="text-[#C8FF47]">Ready to Build</span>
         </div>
 
         {/* 2-Column Split: Editorial Headline + Real Infrastructure Visual */}
@@ -38,8 +38,8 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
                 <span className="text-[#C8FF47]">Our infrastructure.</span>
               </h1>
               
-              <p className="text-base sm:text-lg text-[#EDEDE7]/80 leading-relaxed max-w-2xl mb-8">
-                Gonnsen Tech designs, builds, and manages end-to-end digital infrastructure for businesses in Egypt and worldwide. We provide custom web platforms, software rentals, cloud VPS hosting, institutional domain management, and guaranteed enterprise maintenance agreements.
+              <p className="text-base sm:text-lg text-[#EDEDE7]/85 leading-relaxed max-w-2xl mb-8">
+                Gonnsen Tech builds and manages the digital foundations your company relies on. We create fast custom websites, provide ready-to-use business software rentals, run high-speed cloud servers, and offer ongoing technical support so your systems stay online and trouble-free.
               </p>
             </div>
 
@@ -50,7 +50,7 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
                 type="button"
                 className="px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#C8FF47]"
               >
-                Start Project Inquiry
+                Tell Us About Your Project
               </button>
               
               <button
@@ -58,7 +58,7 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
                 type="button"
                 className="px-6 py-3 text-xs sm:text-sm font-medium text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded hover:border-[#7E8B7B] transition-colors whitespace-nowrap"
               >
-                Inspect 3-Surface Specs
+                See How the System Works
               </button>
             </div>
           </div>
@@ -79,8 +79,8 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
             
             {/* Image caption badge - clean unboxed technical typography */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-[#EDEDE7]/90 bg-[#101310]/85 backdrop-blur-sm border border-[#242D25] px-3 py-2 rounded">
-              <span className="text-[#C8FF47]">NODE SPEC:</span>
-              <span className="truncate">Tier-III Datacenter / BGP Multihomed Backbone</span>
+              <span className="text-[#C8FF47]">SERVER FACILITY:</span>
+              <span className="truncate">Modern enterprise servers with reliable 24/7 power</span>
             </div>
           </div>
         </div>
@@ -93,10 +93,10 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
               06
             </div>
             <div className="text-xs font-semibold uppercase tracking-wider text-[#EDEDE7] mb-1">
-              Core Verticals
+              Core Services
             </div>
             <div className="text-xs text-[#7E8B7B]">
-              Web, CRM/CMS rentals, Automation, Domains, VPS & SLA
+              Websites, software rentals, custom tools, domains, servers & support
             </div>
           </div>
 
@@ -105,10 +105,10 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
               03
             </div>
             <div className="text-xs font-semibold uppercase tracking-wider text-[#EDEDE7] mb-1">
-              Ecosystem Surfaces
+              Connected Platforms
             </div>
             <div className="text-xs text-[#7E8B7B]">
-              Public Web, Client Portal & Internal Operations Console
+              Public website, client dashboard, and internal team operations
             </div>
           </div>
 
@@ -117,10 +117,10 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
               14%
             </div>
             <div className="text-xs font-semibold uppercase tracking-wider text-[#EDEDE7] mb-1">
-              Egypt VAT Compliant
+              Official Egyptian VAT
             </div>
             <div className="text-xs text-[#7E8B7B]">
-              Dual pricing in EGP & USD with formal tax invoicing
+              Transparent pricing in EGP and USD with legal tax invoices
             </div>
           </div>
 
@@ -129,10 +129,10 @@ export function HeroSection({ onExploreClick, onInquiryClick, locale }: HeroSect
               99.9%
             </div>
             <div className="text-xs font-semibold uppercase tracking-wider text-[#EDEDE7] mb-1">
-              SLA Commitment
+              Reliable Uptime Goal
             </div>
             <div className="text-xs text-[#7E8B7B]">
-              Guaranteed 1-hour critical response for managed agreements
+              Fast 1-hour response when you need urgent technical assistance
             </div>
           </div>
 

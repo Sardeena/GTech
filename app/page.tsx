@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRtl } from '@/hooks/useRtl';
 import { TopNavigation } from '@/components/TopNavigation';
 import { HeroSection } from '@/components/HeroSection';
 import { ServicesCatalogue } from '@/components/ServicesCatalogue';
@@ -13,6 +14,7 @@ export default function Home() {
   const [currency, setCurrency] = useState<'EGP' | 'USD'>('EGP');
   const [locale, setLocale] = useState<'en' | 'ar'>('en');
   const [selectedServiceId, setSelectedServiceId] = useState<string>('custom-web-ecommerce');
+  const { direction, isRtl } = useRtl(locale);
 
   const handleCurrencyToggle = () => {
     setCurrency((prev) => (prev === 'EGP' ? 'USD' : 'EGP'));
@@ -42,7 +44,10 @@ export default function Home() {
   };
 
   return (
-    <div className={`min-h-screen bg-[#101310] text-[#EDEDE7] ${locale === 'ar' ? 'font-sans' : ''}`}>
+    <div
+      dir={direction}
+      className={`min-h-screen bg-[#101310] text-[#EDEDE7] transition-all ${isRtl ? 'font-sans' : ''}`}
+    >
       {/* Top Navigation conforming to Top Bar Contract */}
       <TopNavigation
         onInquiryClick={scrollToContact}
