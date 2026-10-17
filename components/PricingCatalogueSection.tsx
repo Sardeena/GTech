@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { PRICING_PACKAGES, PricingPackage } from '@/lib/commercial-data';
+import { EASE_CURVE } from '@/lib/motion';
 
 interface PricingCatalogueSectionProps {
   currency: 'EGP' | 'USD';
@@ -10,14 +11,13 @@ interface PricingCatalogueSectionProps {
   onSelectService: (serviceId: string) => void;
 }
 
-const easeCurve = [0.16, 1, 0.3, 1] as const;
-
 export function PricingCatalogueSection({
   currency,
   locale,
   onSelectService,
 }: PricingCatalogueSectionProps) {
   const isAr = locale === 'ar';
+  const shouldReduceMotion = useReducedMotion();
   const [filterModel, setFilterModel] = useState<string>('all');
 
   const filterTabs = isAr
@@ -40,11 +40,17 @@ export function PricingCatalogueSection({
   });
 
   return (
-    <section id="pricing" className="w-full border-b border-[#242D25] py-16 lg:py-24 bg-[#161B16] overflow-hidden">
+    <section id="pricing" className="relative w-full border-b border-[#242D25] py-16 lg:py-24 bg-[#161B16] overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        {/* Section Header with Viewport Reveal */}
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.45, ease: EASE_CURVE }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+        >
           <div>
             <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
               {isAr ? 'الباقات والأسعار' : 'Transparent Packages'}
@@ -58,115 +64,154 @@ export function PricingCatalogueSection({
               ? 'اختر بين الشراء لمرة واحدة أو الإيجار الشهري. لا توجد رسوم خفية أو مفاجآت في أسعار الصرف.'
               : 'Choose between one-time project builds or predictable monthly software rentals with zero hidden surprises.'}
           </p>
-        </div>
+        </motion.div>
 
-        {/* Model Filter Tabs */}
+        {/* Model Filter Tabs with Smooth Feedback */}
         <div className="flex flex-wrap items-center gap-2 border-b border-[#242D25] pb-5 mb-10">
           {filterTabs.map((tab) => {
             const isActive = filterModel === tab.id;
             return (
-              <button
+              <motion.button
                 key={tab.id}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                transition={{ duration: 0.15, ease: EASE_CURVE }}
                 onClick={() => setFilterModel(tab.id)}
                 type="button"
-                className={`px-4 py-2 text-xs sm:text-sm font-medium rounded transition-colors whitespace-nowrap cursor-pointer ${
+                className={`px-4 py-2 text-xs sm:text-sm font-medium rounded transition-colors whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer ${
                   isActive
-                    ? 'bg-[#C8FF47] text-[#101310] font-semibold'
-                    : 'bg-[#101310] text-[#7E8B7B] border border-[#242D25] hover:text-[#EDEDE7]'
+                    ? 'bg-[#C8FF47] text-[#101310] font-semibold shadow-sm'
+                    : 'bg-[#101310] text-[#7E8B7B] border border-[#242D25] hover:text-[#EDEDE7] hover:border-[#7E8B7B]'
                 }`}
               >
                 {tab.label}
-              </button>
+              </motion.button>
             );
           })}
         </div>
 
         {/* Pricing Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {filteredPackages.map((pkg: PricingPackage, idx: number) => {
-            return (
-              <motion.div
-                key={pkg.id}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: idx * 0.05, ease: easeCurve }}
-                className={`relative flex flex-col justify-between border rounded p-6 bg-[#101310] transition-all ${
-                  pkg.isPopular ? 'border-[#C8FF47] shadow-sm' : 'border-[#242D25]'
-                }`}
-              >
-                <div>
-                  {/* Top Badge */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-[11px] font-mono text-[#7E8B7B] uppercase truncate">
-                      {pkg.serviceCategory}
-                    </span>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded shrink-0 ${
-                      pkg.isPopular
-                        ? 'bg-[#C8FF47] text-[#101310] font-bold'
-                        : 'bg-[#161B16] text-[#C8FF47] border border-[#242D25]'
-                    }`}>
-                      {pkg.badge}
-                    </span>
-                  </div>
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredPackages.map((pkg: PricingPackage, idx: number) => {
+              return (
+                <motion.div
+                  key={pkg.id}
+                  layout
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: shouldReduceMotion ? 0 : idx * 0.04,
+                    ease: EASE_CURVE,
+                  }}
+                  whileHover={
+                    shouldReduceMotion
+                      ? undefined
+                      : { y: -4 }
+                  }
+                  className={`group relative flex flex-col justify-between border rounded p-6 bg-[#101310] transition-[background-color,border-color,box-shadow] duration-200 hover:shadow-xl hover:shadow-black/30 ${
+                    pkg.isPopular
+                      ? 'border-[#C8FF47] shadow-sm shadow-[#C8FF47]/10'
+                      : 'border-[#242D25] hover:border-[#7E8B7B]'
+                  }`}
+                >
+                  {/* Subtle top indicator for popular cards */}
+                  {pkg.isPopular && (
+                    <div
+                      aria-hidden="true"
+                      className="absolute top-0 left-0 right-0 h-[2px] bg-[#C8FF47] rounded-t"
+                    />
+                  )}
 
-                  {/* Package Name */}
-                  <h3 className="text-lg font-bold text-[#EDEDE7] mb-2">
-                    {isAr ? pkg.nameAr : pkg.name}
-                  </h3>
-
-                  {/* Price */}
-                  <div className="mb-4 pb-4 border-b border-[#242D25]">
-                    <div className="text-2xl font-bold font-mono tabular-nums text-[#EDEDE7]">
-                      {currency === 'EGP' ? pkg.priceEgp : pkg.priceUsd}
+                  <div>
+                    {/* Top Row: Category + Badge */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="text-[11px] font-mono text-[#7E8B7B] uppercase truncate">
+                        {pkg.serviceCategory}
+                      </span>
+                      <span
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded shrink-0 transition-transform duration-200 group-hover:scale-105 ${
+                          pkg.isPopular
+                            ? 'bg-[#C8FF47] text-[#101310] font-bold'
+                            : 'bg-[#161B16] text-[#C8FF47] border border-[#242D25]'
+                        }`}
+                      >
+                        {pkg.badge}
+                      </span>
                     </div>
-                    {pkg.periodText && (
-                      <div className="text-[11px] font-mono text-[#7E8B7B] mt-0.5">
-                        {pkg.periodText}
+
+                    {/* Package Name */}
+                    <h3 className="text-lg font-bold text-[#EDEDE7] mb-2 transition-colors group-hover:text-white">
+                      {isAr ? pkg.nameAr : pkg.name}
+                    </h3>
+
+                    {/* Price */}
+                    <div className="mb-4 pb-4 border-b border-[#242D25]">
+                      <div className="text-2xl font-bold font-mono tabular-nums text-[#EDEDE7]">
+                        {currency === 'EGP' ? pkg.priceEgp : pkg.priceUsd}
                       </div>
-                    )}
-                  </div>
-
-                  {/* Summary */}
-                  <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-6">
-                    {pkg.description}
-                  </p>
-
-                  {/* Included Deliverables */}
-                  <div className="space-y-2 mb-6 border-t border-[#242D25] pt-4">
-                    <div className="text-[10px] font-mono uppercase text-[#7E8B7B]">
-                      {isAr ? 'ما تتضمنه الباقة:' : 'What is included:'}
+                      {pkg.periodText && (
+                        <div className="text-[11px] font-mono text-[#7E8B7B] mt-0.5">
+                          {pkg.periodText}
+                        </div>
+                      )}
                     </div>
-                    {pkg.deliverables.map((item, dIdx) => (
-                      <div key={dIdx} className="flex items-start gap-1.5 text-xs text-[#EDEDE7]/90 leading-tight">
-                        <span className="text-[#C8FF47] shrink-0 font-bold">✓</span>
-                        <span>{item}</span>
+
+                    {/* Summary */}
+                    <p className="text-xs text-[#EDEDE7]/80 leading-relaxed mb-6">
+                      {pkg.description}
+                    </p>
+
+                    {/* Included Deliverables */}
+                    <div className="space-y-2 mb-6 border-t border-[#242D25] pt-4">
+                      <div className="text-[10px] font-mono uppercase text-[#7E8B7B]">
+                        {isAr ? 'ما تتضمنه الباقة:' : 'What is included:'}
                       </div>
-                    ))}
+                      {pkg.deliverables.map((item, dIdx) => (
+                        <div key={dIdx} className="flex items-start gap-1.5 text-xs text-[#EDEDE7]/90 leading-tight">
+                          <span className="text-[#C8FF47] shrink-0 font-bold">✓</span>
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Bottom CTA */}
-                <div className="pt-4 border-t border-[#242D25]">
-                  <button
-                    onClick={() => onSelectService(pkg.serviceSlug)}
-                    type="button"
-                    className={`w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider rounded transition-colors text-center cursor-pointer ${
-                      pkg.isPopular
-                        ? 'bg-[#C8FF47] text-[#101310] hover:bg-[#b5ee35]'
-                        : 'bg-[#161B16] text-[#EDEDE7] border border-[#242D25] hover:border-[#C8FF47] hover:text-[#C8FF47]'
-                    }`}
-                  >
-                    {isAr ? 'اختر هذه الباقة' : pkg.ctaText}
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                  {/* Bottom CTA */}
+                  <div className="pt-4 border-t border-[#242D25]">
+                    <motion.button
+                      whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                      transition={{ duration: 0.15, ease: EASE_CURVE }}
+                      onClick={() => onSelectService(pkg.serviceSlug)}
+                      type="button"
+                      className={`w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider rounded transition-colors text-center focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer ${
+                        pkg.isPopular
+                          ? 'bg-[#C8FF47] text-[#101310] hover:bg-[#b5ee35]'
+                          : 'bg-[#161B16] text-[#EDEDE7] border border-[#242D25] hover:border-[#C8FF47] hover:text-[#C8FF47]'
+                      }`}
+                    >
+                      {isAr ? 'اختر هذه الباقة' : pkg.ctaText}
+                    </motion.button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
 
-        {/* Custom Scope Notice */}
-        <div className="border border-[#242D25] bg-[#101310] p-6 rounded flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Custom Scope Notice with Interactive Trigger */}
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, ease: EASE_CURVE }}
+          className="border border-[#242D25] bg-[#101310] p-6 rounded flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors hover:border-[#7E8B7B]/60"
+        >
           <div>
             <h4 className="text-base font-bold text-[#EDEDE7]">
               {isAr ? 'هل تحتاج إلى متطلبات مخصصة بالكامل؟' : 'Need a Fully Bespoke Setup?'}
@@ -177,14 +222,17 @@ export function PricingCatalogueSection({
                 : 'If your business requires specialized multi-system integrations or custom modules, we provide detailed written quotes based on your exact requirements.'}
             </p>
           </div>
-          <button
+          <motion.button
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            transition={{ duration: 0.15, ease: EASE_CURVE }}
             onClick={() => onSelectService('web-design')}
             type="button"
-            className="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer shadow-sm"
           >
             {isAr ? 'طلب عرض مخصص' : 'Request Custom Quote'}
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
       </div>
     </section>

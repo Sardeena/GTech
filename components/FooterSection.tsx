@@ -35,32 +35,32 @@ export function FooterSection() {
             </div>
             <ul className="space-y-2 text-xs text-[#7E8B7B]">
               <li>
-                <Link href="/services/web-design" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/services/web-design" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Website Design & Development
                 </Link>
               </li>
               <li>
-                <Link href="/services/crm" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/services/crm" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   CRM Systems — Rent or Buy
                 </Link>
               </li>
               <li>
-                <Link href="/services/automation" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/services/automation" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Business Automation & n8n Workflows
                 </Link>
               </li>
               <li>
-                <Link href="/services/branding" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/services/branding" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Branding & Creative Design
                 </Link>
               </li>
               <li>
-                <Link href="/services/domains-hosting-vps" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/services/domains-hosting-vps" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Domains, Hosting & VPS
                 </Link>
               </li>
               <li>
-                <Link href="/services/maintenance" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/services/maintenance" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Website Maintenance & Technical Support
                 </Link>
               </li>
@@ -74,32 +74,32 @@ export function FooterSection() {
             </div>
             <ul className="space-y-2 text-xs text-[#7E8B7B]">
               <li>
-                <Link href="/pricing" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/pricing" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Pricing & Packages
                 </Link>
               </li>
               <li>
-                <Link href="/work" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/work" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Work & Product Demos
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/about" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   About Gonnsen Tech
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-[#C8FF47] transition-colors">
+                <Link href="/contact" className="hover:text-[#C8FF47] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Start a Project Inquiry
                 </Link>
               </li>
               <li>
-                <Link href="/legal/terms" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/legal/terms" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/legal/privacy" className="hover:text-[#EDEDE7] transition-colors">
+                <Link href="/legal/privacy" className="hover:text-[#EDEDE7] transition-colors focus-visible:outline-2 focus-visible:outline-[#C8FF47] rounded">
                   Privacy Policy
                 </Link>
               </li>

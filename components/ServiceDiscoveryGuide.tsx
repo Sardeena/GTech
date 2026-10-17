@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { COMMERCIAL_SERVICES } from '@/lib/commercial-data';
+import { EASE_CURVE } from '@/lib/motion';
 
 interface ServiceDiscoveryGuideProps {
   currency: 'EGP' | 'USD';
@@ -11,14 +12,13 @@ interface ServiceDiscoveryGuideProps {
   onSelectService: (serviceId: string) => void;
 }
 
-const easeCurve = [0.16, 1, 0.3, 1] as const;
-
 export function ServiceDiscoveryGuide({
   currency,
   locale,
   onSelectService,
 }: ServiceDiscoveryGuideProps) {
   const isAr = locale === 'ar';
+  const shouldReduceMotion = useReducedMotion();
   const [selectedGoal, setSelectedGoal] = useState<string>('web-design');
 
   const goals = isAr
@@ -42,11 +42,17 @@ export function ServiceDiscoveryGuide({
   const activeService = COMMERCIAL_SERVICES.find((s) => s.slug === selectedGoal) || COMMERCIAL_SERVICES[0];
 
   return (
-    <section id="guide" className="w-full border-b border-[#242D25] py-16 lg:py-24 bg-[#161B16] overflow-hidden">
+    <section id="guide" className="relative w-full border-b border-[#242D25] py-16 lg:py-24 bg-[#161B16] overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        {/* Section Header with Viewport Reveal */}
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.45, ease: EASE_CURVE }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
           <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
             {isAr ? 'دليل الاختيار السريع' : 'Interactive Service Guide'}
           </div>
@@ -58,7 +64,7 @@ export function ServiceDiscoveryGuide({
               ? 'اختر هدفك الحالي وسنوضح لك الحل الأنسب ونموذج التعاقد المتاح والتكلفة المتوقعة.'
               : 'Select your immediate business goal to see our recommended solution, commercial options, and estimated timeline.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Goal Selector Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
@@ -67,13 +73,15 @@ export function ServiceDiscoveryGuide({
             return (
               <motion.button
                 key={g.id}
-                whileTap={{ scale: 0.97 }}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                transition={{ duration: 0.15, ease: EASE_CURVE }}
                 onClick={() => setSelectedGoal(g.id)}
                 type="button"
-                className={`px-4 py-2.5 text-xs sm:text-sm font-medium rounded transition-colors whitespace-nowrap cursor-pointer ${
+                className={`px-4 py-2.5 text-xs sm:text-sm font-medium rounded transition-colors whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer ${
                   isSelected
                     ? 'bg-[#C8FF47] text-[#101310] font-semibold shadow-sm'
-                    : 'bg-[#101310] text-[#7E8B7B] border border-[#242D25] hover:text-[#EDEDE7]'
+                    : 'bg-[#101310] text-[#7E8B7B] border border-[#242D25] hover:text-[#EDEDE7] hover:border-[#7E8B7B]'
                 }`}
               >
                 {g.label}
@@ -82,15 +90,15 @@ export function ServiceDiscoveryGuide({
           })}
         </div>
 
-        {/* Selected Recommendation Card */}
+        {/* Selected Recommendation Card with Smooth Transition */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeService.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: easeCurve }}
-            className="border border-[#242D25] bg-[#101310] p-8 sm:p-10 rounded max-w-5xl mx-auto mb-12"
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.3, ease: EASE_CURVE }}
+            className="border border-[#242D25] bg-[#101310] p-8 sm:p-10 rounded max-w-5xl mx-auto mb-12 shadow-lg shadow-black/20"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
@@ -150,7 +158,7 @@ export function ServiceDiscoveryGuide({
                   <div className="text-[10px] font-mono text-[#7E8B7B] uppercase">
                     {isAr ? `الاستثمار التقديري (${currency})` : `Estimated Starting Investment (${currency})`}
                   </div>
-                  <div className="text-lg font-bold font-mono text-[#C8FF47] mt-0.5">
+                  <div className="text-lg font-bold font-mono text-[#C8FF47] tabular-nums mt-0.5">
                     {currency === 'EGP' ? activeService.pricingSummaryEgp : activeService.pricingSummaryUsd}
                   </div>
                   <p className="text-[11px] text-[#7E8B7B] mt-1 leading-snug">
@@ -161,19 +169,28 @@ export function ServiceDiscoveryGuide({
                 </div>
 
                 <div className="pt-2 space-y-2">
-                  <button
+                  <motion.button
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                    whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: EASE_CURVE }}
                     onClick={() => onSelectService(activeService.slug)}
                     type="button"
-                    className="w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors text-center cursor-pointer"
+                    className="w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors text-center focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer"
                   >
                     {isAr ? 'ابدأ هذا المشروع الآن' : 'Start This Project'}
-                  </button>
+                  </motion.button>
 
                   <Link
                     href={`/services/${activeService.slug}`}
-                    className="block w-full py-2 px-4 text-xs font-medium text-[#EDEDE7] border border-[#242D25] bg-[#101310] rounded hover:border-[#7E8B7B] transition-colors text-center"
+                    className="group block w-full py-2 px-4 text-xs font-medium text-[#EDEDE7] border border-[#242D25] bg-[#101310] rounded hover:border-[#7E8B7B] transition-colors text-center focus-visible:outline-2 focus-visible:outline-[#C8FF47]"
                   >
-                    {isAr ? 'قراءة التفاصيل والأسئلة الشائعة' : 'Read Full Details & FAQs'}
+                    <span>{isAr ? 'قراءة التفاصيل والأسئلة الشائعة' : 'Read Full Details & FAQs'}</span>
+                    <span
+                      aria-hidden="true"
+                      className="inline-block transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ml-1 rtl:mr-1 rtl:ml-0"
+                    >
+                      {isAr ? '←' : '→'}
+                    </span>
                   </Link>
                 </div>
 
@@ -183,8 +200,14 @@ export function ServiceDiscoveryGuide({
           </motion.div>
         </AnimatePresence>
 
-        {/* Rent vs. Buy Comparison Matrix (Simple, Customer-Facing) */}
-        <div className="border border-[#242D25] bg-[#101310] p-7 sm:p-8 rounded max-w-5xl mx-auto">
+        {/* Rent vs. Buy Comparison Matrix */}
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, ease: EASE_CURVE }}
+          className="border border-[#242D25] bg-[#101310] p-7 sm:p-8 rounded max-w-5xl mx-auto"
+        >
           <div className="mb-6">
             <span className="text-xs font-mono text-[#C8FF47] uppercase font-semibold">
               {isAr ? 'مقارنة تجارية' : 'Commercial Model Guide'}
@@ -200,7 +223,7 @@ export function ServiceDiscoveryGuide({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-            <div className="border border-[#242D25] bg-[#161B16] p-5 rounded space-y-3">
+            <div className="border border-[#242D25] bg-[#161B16] p-5 rounded space-y-3 transition-colors hover:border-[#7E8B7B]">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-sm text-[#EDEDE7]">{isAr ? 'الإيجار الشهري (Rental)' : 'Monthly Software Rental'}</span>
                 <span className="text-[10px] font-mono text-[#C8FF47] bg-[#101310] px-2 py-0.5 rounded border border-[#242D25]">
@@ -219,7 +242,7 @@ export function ServiceDiscoveryGuide({
               </div>
             </div>
 
-            <div className="border border-[#242D25] bg-[#161B16] p-5 rounded space-y-3">
+            <div className="border border-[#242D25] bg-[#161B16] p-5 rounded space-y-3 transition-colors hover:border-[#7E8B7B]">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-sm text-[#EDEDE7]">{isAr ? 'الشراء الكامل (One-Time Build)' : 'Full Purchase & Custom Build'}</span>
                 <span className="text-[10px] font-mono text-[#EDEDE7] bg-[#101310] px-2 py-0.5 rounded border border-[#242D25]">
@@ -238,7 +261,7 @@ export function ServiceDiscoveryGuide({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

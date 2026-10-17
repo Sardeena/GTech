@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { COMMERCIAL_SERVICES } from '@/lib/commercial-data';
+import { EASE_CURVE } from '@/lib/motion';
 
 interface InquiryFormProps {
   selectedServiceId?: string;
@@ -16,9 +17,8 @@ interface ServerSuccessData {
   storageBackend?: string;
 }
 
-const easeCurve = [0.16, 1, 0.3, 1] as const;
-
 export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
+  const shouldReduceMotion = useReducedMotion();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -31,7 +31,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
     website_hp: '', // Honeypot field
   });
 
-  // Sync selected service if changed from outside without useEffect cascading renders
+  // Sync selected service if changed from outside
   const [prevServiceId, setPrevServiceId] = useState(selectedServiceId);
   if (selectedServiceId && selectedServiceId !== prevServiceId) {
     setPrevServiceId(selectedServiceId);
@@ -124,7 +124,7 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
       phone: '',
       organization: '',
       country: 'EG',
-      serviceVertical: 'custom-web-ecommerce',
+      serviceVertical: 'web-design',
       budgetRange: currency === 'EGP' ? '50k_100k' : '2k_5k',
       requirements: '',
       website_hp: '',
@@ -135,16 +135,16 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="w-full border-b border-[#242D25] py-16 lg:py-24 bg-[#101310] overflow-hidden"
+      className="relative w-full border-b border-[#242D25] py-16 lg:py-24 bg-[#101310] overflow-hidden"
     >
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
         
-        {/* Header */}
+        {/* Header with Viewport Reveal */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, ease: easeCurve }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.45, ease: EASE_CURVE }}
           className="text-center mb-12"
         >
           <div className="text-xs font-mono tracking-widest text-[#7E8B7B] uppercase mb-2">
@@ -159,28 +159,28 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: easeCurve }}
-          className="border border-[#242D25] bg-[#161B16] p-8 sm:p-10 rounded"
+          viewport={{ once: true, margin: '-20px' }}
+          transition={{ duration: 0.5, ease: EASE_CURVE }}
+          className="border border-[#242D25] bg-[#161B16] p-8 sm:p-10 rounded shadow-xl shadow-black/20"
         >
           <AnimatePresence mode="wait">
             {successData ? (
               <motion.div
                 key="submitted-state"
-                initial={{ opacity: 0, scale: 0.96 }}
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.35, ease: easeCurve }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.35, ease: EASE_CURVE }}
                 className="text-center py-10 space-y-4"
                 role="status"
                 aria-live="polite"
               >
                 <motion.div
-                  initial={{ scale: 0 }}
+                  initial={shouldReduceMotion ? { scale: 1 } : { scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.1 }}
+                  transition={{ type: 'spring', damping: 14, stiffness: 220, delay: 0.08 }}
                   className="inline-flex h-12 w-12 items-center justify-center rounded border border-[#C8FF47] bg-[#182019] text-[#C8FF47] text-xl font-bold"
                   aria-hidden="true"
                 >
@@ -203,11 +203,12 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
 
                 <div className="pt-4">
                   <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                    whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                    transition={{ duration: 0.15, ease: EASE_CURVE }}
                     onClick={handleReset}
                     type="button"
-                    className="px-5 py-2 text-xs font-semibold text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors cursor-pointer"
+                    className="px-5 py-2 text-xs font-semibold text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C8FF47]"
                   >
                     Submit Another Inquiry
                   </motion.button>
@@ -216,24 +217,30 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
             ) : (
               <motion.form
                 key="form-state"
-                initial={{ opacity: 0 }}
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0 }}
                 transition={{ duration: 0.25 }}
                 onSubmit={handleSubmit}
                 noValidate
                 className="space-y-6"
               >
-                {/* General Accessible Error Alert */}
-                {generalError && (
-                  <div
-                    role="alert"
-                    aria-live="polite"
-                    className="p-3 bg-red-950/50 border border-red-800 text-xs text-red-200 rounded font-mono"
-                  >
-                    {generalError}
-                  </div>
-                )}
+                {/* General Accessible Error Alert with gentle reveal */}
+                <AnimatePresence>
+                  {generalError && (
+                    <motion.div
+                      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2, ease: EASE_CURVE }}
+                      role="alert"
+                      aria-live="polite"
+                      className="p-3 bg-red-950/50 border border-red-800 text-xs text-red-200 rounded font-mono"
+                    >
+                      {generalError}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {/* Honeypot field for spam prevention (hidden from users) */}
                 <div className="hidden" aria-hidden="true">
@@ -301,11 +308,20 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                         fieldErrors.fullName ? 'border-red-500 focus:border-red-500' : 'border-[#242D25] focus:border-[#C8FF47]'
                       }`}
                     />
-                    {fieldErrors.fullName && (
-                      <p id="fullName-error" className="mt-1 text-xs text-red-400 font-mono">
-                        {fieldErrors.fullName}
-                      </p>
-                    )}
+                    <AnimatePresence>
+                      {fieldErrors.fullName && (
+                        <motion.p
+                          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                          transition={{ duration: 0.15 }}
+                          id="fullName-error"
+                          className="mt-1 text-xs text-red-400 font-mono"
+                        >
+                          {fieldErrors.fullName}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   <div>
@@ -335,11 +351,20 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                         fieldErrors.email ? 'border-red-500 focus:border-red-500' : 'border-[#242D25] focus:border-[#C8FF47]'
                       }`}
                     />
-                    {fieldErrors.email && (
-                      <p id="email-error" className="mt-1 text-xs text-red-400 font-mono">
-                        {fieldErrors.email}
-                      </p>
-                    )}
+                    <AnimatePresence>
+                      {fieldErrors.email && (
+                        <motion.p
+                          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                          transition={{ duration: 0.15 }}
+                          id="email-error"
+                          className="mt-1 text-xs text-red-400 font-mono"
+                        >
+                          {fieldErrors.email}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
 
@@ -468,11 +493,20 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                       fieldErrors.requirements ? 'border-red-500 focus:border-red-500' : 'border-[#242D25] focus:border-[#C8FF47]'
                     }`}
                   />
-                  {fieldErrors.requirements && (
-                    <p id="requirements-error" className="mt-1 text-xs text-red-400 font-mono">
-                      {fieldErrors.requirements}
-                    </p>
-                  )}
+                  <AnimatePresence>
+                    {fieldErrors.requirements && (
+                      <motion.p
+                        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                        transition={{ duration: 0.15 }}
+                        id="requirements-error"
+                        className="mt-1 text-xs text-red-400 font-mono"
+                      >
+                        {fieldErrors.requirements}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Submit CTA */}
@@ -481,13 +515,36 @@ export function InquiryForm({ selectedServiceId, currency }: InquiryFormProps) {
                     Protected by rate-limits and server validation.
                   </div>
                   <motion.button
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    whileHover={shouldReduceMotion || isSubmitting ? undefined : { scale: 1.02 }}
+                    whileTap={shouldReduceMotion || isSubmitting ? undefined : { scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: EASE_CURVE }}
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors disabled:opacity-50 whitespace-nowrap cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors disabled:opacity-50 whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C8FF47] shadow-sm"
                   >
-                    {isSubmitting ? 'Verifying & Saving...' : 'Submit Project Inquiry'}
+                    {isSubmitting && (
+                      <svg
+                        className="animate-spin h-3.5 w-3.5 text-[#101310]"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                    )}
+                    <span>{isSubmitting ? 'Verifying & Saving...' : 'Submit Project Inquiry'}</span>
                   </motion.button>
                 </div>
 

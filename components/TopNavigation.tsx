@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { useRtl } from '@/hooks/useRtl';
+import { EASE_CURVE } from '@/lib/motion';
 
 interface TopNavigationProps {
   onInquiryClick: () => void;
@@ -21,7 +22,29 @@ export function TopNavigation({
   onLocaleToggle,
 }: TopNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { isRtl, direction } = useRtl(locale);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile drawer on escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
 
   const navItems = isRtl
     ? [
@@ -44,9 +67,11 @@ export function TopNavigation({
   return (
     <header
       dir={direction}
-      className={`sticky top-0 z-50 w-full border-b border-[#242D25] bg-[#101310]/95 backdrop-blur-md transition-colors ${
-        isRtl ? 'font-sans' : ''
-      }`}
+      className={`sticky top-0 z-50 w-full transition-[background-color,box-shadow,border-color] duration-250 ${
+        isScrolled
+          ? 'border-b border-[#242D25] bg-[#101310]/95 backdrop-blur-md shadow-lg shadow-black/40'
+          : 'border-b border-[#242D25]/80 bg-[#101310]/80 backdrop-blur-sm'
+      } ${isRtl ? 'font-sans' : ''}`}
     >
       <div className="mx-auto grid grid-cols-12 items-center h-18 max-w-7xl px-6 lg:px-8 gap-4">
         
@@ -54,7 +79,7 @@ export function TopNavigation({
         <div className="col-span-7 sm:col-span-5 lg:col-span-3 flex items-center gap-3">
           <Link
             href="/"
-            className="text-lg font-bold tracking-tight text-[#EDEDE7] transition-colors hover:text-[#C8FF47] whitespace-nowrap shrink-0"
+            className="text-lg font-bold tracking-tight text-[#EDEDE7] transition-colors hover:text-[#C8FF47] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] focus-visible:outline-offset-2 rounded"
           >
             GONNSEN TECH
           </Link>
@@ -72,9 +97,13 @@ export function TopNavigation({
             <a
               key={item.href}
               href={item.href}
-              className="transition-colors hover:text-[#EDEDE7] whitespace-nowrap shrink-0"
+              className="relative py-1 transition-colors hover:text-[#EDEDE7] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] focus-visible:outline-offset-2 rounded group"
             >
-              {item.label}
+              <span>{item.label}</span>
+              <span
+                aria-hidden="true"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#C8FF47] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-start"
+              />
             </a>
           ))}
         </nav>
@@ -84,11 +113,14 @@ export function TopNavigation({
           
           {/* Currency Toggle */}
           <motion.button
-            whileTap={{ scale: 0.95 }}
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02, borderColor: '#7E8B7B' }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
+            transition={{ duration: 0.15, ease: EASE_CURVE }}
             onClick={onCurrencyToggle}
             type="button"
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B] cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B] focus-visible:outline-2 focus-visible:outline-[#C8FF47] focus-visible:outline-offset-2 cursor-pointer"
             title={isRtl ? 'تغيير عملة عرض الأسعار' : 'Switch pricing currency'}
+            aria-label={isRtl ? 'تغيير عملة عرض الأسعار' : 'Switch pricing currency'}
           >
             <span className="text-[#7E8B7B]">
               {isRtl ? 'العملة:' : 'CURRENCY:'}
@@ -98,10 +130,12 @@ export function TopNavigation({
 
           {/* Locale Toggle */}
           <motion.button
-            whileTap={{ scale: 0.95 }}
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02, borderColor: '#7E8B7B' }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
+            transition={{ duration: 0.15, ease: EASE_CURVE }}
             onClick={onLocaleToggle}
             type="button"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B] cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded transition-colors hover:border-[#7E8B7B] focus-visible:outline-2 focus-visible:outline-[#C8FF47] focus-visible:outline-offset-2 cursor-pointer"
             title={isRtl ? 'Switch to English' : 'التبديل إلى العربية'}
             aria-label={isRtl ? 'Switch to English' : 'التبديل إلى العربية'}
           >
@@ -115,25 +149,27 @@ export function TopNavigation({
 
           {/* Primary CTA */}
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02, y: -0.5 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            transition={{ duration: 0.15, ease: EASE_CURVE }}
             onClick={onInquiryClick}
             type="button"
-            className="px-3.5 sm:px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer"
+            className="px-3.5 sm:px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] focus-visible:outline-offset-2 cursor-pointer shadow-sm"
           >
             {isRtl ? 'ابدأ مشروعك' : 'Start a Project'}
           </motion.button>
 
           {/* Mobile hamburger button */}
           <motion.button
-            whileTap={{ scale: 0.92 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.94 }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             type="button"
-            className="flex lg:hidden p-2 text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
+            className="flex lg:hidden p-2 text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded hover:border-[#7E8B7B] focus-visible:outline-2 focus-visible:outline-[#C8FF47] focus-visible:outline-offset-2 cursor-pointer"
             aria-label={isRtl ? 'تبديل القائمة' : 'Toggle navigation menu'}
+            aria-expanded={mobileMenuOpen}
           >
             <svg
-              className="h-5 w-5"
+              className="h-5 w-5 transition-transform duration-200"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -152,12 +188,14 @@ export function TopNavigation({
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: EASE_CURVE }}
             dir={direction}
-            className="lg:hidden border-t border-[#242D25] bg-[#101310] px-6 py-4 space-y-4 overflow-hidden"
+            role="dialog"
+            aria-label={isRtl ? 'قائمة الموبايل' : 'Mobile navigation'}
+            className="lg:hidden border-t border-[#242D25] bg-[#101310] px-6 py-4 space-y-4 overflow-hidden shadow-2xl"
           >
             <div className="flex flex-col space-y-2.5 text-sm text-[#7E8B7B] text-start">
               {navItems.map((item) => (
@@ -165,7 +203,7 @@ export function TopNavigation({
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-1.5 hover:text-[#EDEDE7] transition-colors"
+                  className="py-2 hover:text-[#EDEDE7] transition-colors rounded focus-visible:outline-2 focus-visible:outline-[#C8FF47]"
                 >
                   {item.label}
                 </a>
@@ -176,16 +214,16 @@ export function TopNavigation({
               <button
                 onClick={onCurrencyToggle}
                 type="button"
-                className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
+                className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded active:scale-95 transition-transform"
               >
-                {isRtl ? 'العملة:' : 'CURRENCY:'} <span className="text-[#C8FF47]">{currency}</span>
+                {isRtl ? 'العملة:' : 'CURRENCY:'} <span className="text-[#C8FF47] font-semibold">{currency}</span>
               </button>
               <button
                 onClick={onLocaleToggle}
                 type="button"
-                className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded"
+                className="px-3 py-1.5 text-xs font-mono text-[#EDEDE7] border border-[#242D25] bg-[#161B16] rounded active:scale-95 transition-transform"
               >
-                {isRtl ? 'اللغة:' : 'LOCALE:'} <span className="text-[#C8FF47]">{locale === 'en' ? 'EN' : 'العربية'}</span>
+                {isRtl ? 'اللغة:' : 'LOCALE:'} <span className="text-[#C8FF47] font-semibold">{locale === 'en' ? 'EN' : 'العربية'}</span>
               </button>
             </div>
           </motion.div>

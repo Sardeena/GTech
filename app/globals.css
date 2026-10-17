@@ -31,6 +31,25 @@
   }
 }
 
+/* Restrained ambient glow behind content */
+@keyframes ambient-glow-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.06;
+  }
+  50% {
+    transform: translate3d(24px, -18px, 0) scale(1.12);
+    opacity: 0.11;
+  }
+}
+
+.ambient-lime-radial {
+  background: radial-gradient(circle at 50% 50%, rgba(200, 255, 71, 0.14) 0%, rgba(16, 19, 16, 0) 70%);
+  animation: ambient-glow-drift 18s ease-in-out infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
 /* Reduced motion respect */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -38,5 +57,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .ambient-lime-radial {
+    animation: none !important;
+    opacity: 0.06 !important;
   }
 }
