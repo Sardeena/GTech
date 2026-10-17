@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 export function FooterSection() {
   return (
@@ -12,47 +13,96 @@ export function FooterSection() {
           
           {/* Brand & Positioning */}
           <div className="md:col-span-5 space-y-4">
-            <div className="text-xl font-bold tracking-tight text-[#EDEDE7]">
+            <Link href="/" className="text-xl font-bold tracking-tight text-[#EDEDE7] hover:text-[#C8FF47] transition-colors">
               GONNSEN TECH
-            </div>
+            </Link>
             <p className="text-sm font-medium text-[#C8FF47]">
-              Your business. Our infrastructure.
+              Your ideas. Built to work.
             </p>
             <p className="text-xs text-[#7E8B7B] max-w-sm leading-relaxed">
-              Custom websites, business software rentals, cloud servers, and reliable technical support for growing companies in Egypt and worldwide.
+              We design websites, build CRM business systems, automate workflows, and provide reliable cloud hosting and technical maintenance for companies in Egypt and international markets.
             </p>
             <div className="pt-2 text-xs font-mono text-[#7E8B7B] space-y-1">
               <div>Cairo Office: Cairo, Egypt</div>
-              <div>International Cloud: High-speed European servers</div>
+              <div>Commercial Services: Egypt (EGP) & International (USD)</div>
             </div>
           </div>
 
-          {/* Nav Mirror: Services */}
-          <div className="md:col-span-3 space-y-3">
+          {/* Column 2: Commercial Services */}
+          <div className="md:col-span-4 space-y-3">
             <div className="text-xs font-mono tracking-wider text-[#EDEDE7] uppercase font-semibold">
-              Services
+              Services & Software
             </div>
             <ul className="space-y-2 text-xs text-[#7E8B7B]">
-              <li><a href="#services" className="hover:text-[#EDEDE7] transition-colors">Websites & Online Stores</a></li>
-              <li><a href="#services" className="hover:text-[#EDEDE7] transition-colors">CRM & CMS Software Rentals</a></li>
-              <li><a href="#services" className="hover:text-[#EDEDE7] transition-colors">Custom Business Apps</a></li>
-              <li><a href="#services" className="hover:text-[#EDEDE7] transition-colors">Domain Registration & DNS</a></li>
-              <li><a href="#services" className="hover:text-[#EDEDE7] transition-colors">Hosting & Cloud Servers</a></li>
-              <li><a href="#services" className="hover:text-[#EDEDE7] transition-colors">Maintenance & Support</a></li>
+              <li>
+                <Link href="/services/web-design" className="hover:text-[#EDEDE7] transition-colors">
+                  Website Design & Development
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/crm" className="hover:text-[#EDEDE7] transition-colors">
+                  CRM Systems — Rent or Buy
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/automation" className="hover:text-[#EDEDE7] transition-colors">
+                  Business Automation & n8n Workflows
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/branding" className="hover:text-[#EDEDE7] transition-colors">
+                  Branding & Creative Design
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/domains-hosting-vps" className="hover:text-[#EDEDE7] transition-colors">
+                  Domains, Hosting & VPS
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/maintenance" className="hover:text-[#EDEDE7] transition-colors">
+                  Website Maintenance & Technical Support
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Architecture & Specs */}
-          <div className="md:col-span-4 space-y-3">
+          {/* Column 3: Company & Policies */}
+          <div className="md:col-span-3 space-y-3">
             <div className="text-xs font-mono tracking-wider text-[#EDEDE7] uppercase font-semibold">
-              System Overview
+              Company & Inquiries
             </div>
             <ul className="space-y-2 text-xs text-[#7E8B7B]">
-              <li><a href="#ecosystem" className="hover:text-[#EDEDE7] transition-colors">The Three System Areas</a></li>
-              <li><a href="#data-model" className="hover:text-[#EDEDE7] transition-colors">How Data is Organized</a></li>
-              <li><a href="#security" className="hover:text-[#EDEDE7] transition-colors">How We Protect Client Data</a></li>
-              <li><a href="#roadmap" className="hover:text-[#EDEDE7] transition-colors">What We Are Building Next</a></li>
-              <li><a href="#contact" className="hover:text-[#C8FF47] transition-colors">Send a Project Inquiry</a></li>
+              <li>
+                <Link href="/pricing" className="hover:text-[#EDEDE7] transition-colors">
+                  Pricing & Packages
+                </Link>
+              </li>
+              <li>
+                <Link href="/work" className="hover:text-[#EDEDE7] transition-colors">
+                  Work & Product Demos
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-[#EDEDE7] transition-colors">
+                  About Gonnsen Tech
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#C8FF47] transition-colors">
+                  Start a Project Inquiry
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/terms" className="hover:text-[#EDEDE7] transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/privacy" className="hover:text-[#EDEDE7] transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -68,9 +118,9 @@ export function FooterSection() {
             <span>Registered Commercial Business</span>
           </div>
 
-          <div className="flex items-center gap-6 font-mono text-[11px]">
-            <span>Next.js 15 & PostgreSQL</span>
-            <span className="text-[#C8FF47]">Reliable Foundation</span>
+          <div className="flex items-center gap-4 font-mono text-[11px]">
+            <span>Egypt & International</span>
+            <span className="text-[#C8FF47]">Your ideas. Built to work.</span>
           </div>
         </div>
 

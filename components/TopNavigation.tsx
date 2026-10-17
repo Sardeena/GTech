@@ -25,18 +25,20 @@ export function TopNavigation({
 
   const navItems = isRtl
     ? [
-        { label: 'الخدمات', href: '#services' },
-        { label: 'كيف يعمل النظام', href: '#ecosystem' },
-        { label: 'قواعد البيانات', href: '#data-model' },
-        { label: 'الأمان والخصوصية', href: '#security' },
-        { label: 'خطة العمل', href: '#roadmap' },
+        { label: 'الخدمات', href: '/#services' },
+        { label: 'الأسعار والباقات', href: '/#pricing' },
+        { label: 'كيف نعمل', href: '/#how-it-works' },
+        { label: 'نماذج الأعمال', href: '/#work' },
+        { label: 'عن الشركة', href: '/#about' },
+        { label: 'تواصل معنا', href: '/#contact' },
       ]
     : [
-        { label: 'Services', href: '#services' },
-        { label: 'How It Works', href: '#ecosystem' },
-        { label: 'Database', href: '#data-model' },
-        { label: 'Security', href: '#security' },
-        { label: 'Roadmap', href: '#roadmap' },
+        { label: 'Services', href: '/#services' },
+        { label: 'Pricing', href: '/#pricing' },
+        { label: 'How It Works', href: '/#how-it-works' },
+        { label: 'Work & Demos', href: '/#work' },
+        { label: 'About', href: '/#about' },
+        { label: 'Contact', href: '/#contact' },
       ];
 
   return (
@@ -119,7 +121,7 @@ export function TopNavigation({
             type="button"
             className="px-3.5 sm:px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#101310] bg-[#C8FF47] rounded hover:bg-[#b5ee35] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#C8FF47] cursor-pointer"
           >
-            {isRtl ? 'تواصل معنا' : 'Contact Us'}
+            {isRtl ? 'ابدأ مشروعك' : 'Start a Project'}
           </motion.button>
 
           {/* Mobile hamburger button */}

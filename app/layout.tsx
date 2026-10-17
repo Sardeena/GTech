@@ -2,22 +2,24 @@ import type {Metadata, Viewport} from 'next';
 import './globals.css'; // Global styles
 
 export const metadata: Metadata = {
-  title: 'Gonnsen Tech — Your business. Our infrastructure.',
-  description: 'Enterprise web architecture, CRM/CMS software rentals, custom automation, domains, cloud hosting, VPS, and managed technology services serving Egypt and international markets.',
+  title: 'Gonnsen Tech — Your ideas. Built to work.',
+  description: 'We design websites, build business CRM systems, and automate the work that slows you down. Professional web design, CRM rentals, n8n automation, branding, hosting, and technical maintenance for Egypt and global markets.',
   keywords: [
     'Gonnsen Tech',
-    'enterprise web infrastructure Egypt',
+    'web design Egypt',
     'custom web development Cairo',
-    'managed cloud hosting VPS',
-    'CRM software rental',
-    'CMS rental Egypt',
-    'domain management',
-    'business automation'
+    'CRM software rental Egypt',
+    'CRM purchase and customization',
+    'n8n workflow automation',
+    'business process automation Egypt',
+    'branding and graphic design',
+    'web hosting and VPS Egypt',
+    'website maintenance support'
   ],
-  authors: [{name: 'Gonnsen Tech Architecture Group'}],
+  authors: [{name: 'Gonnsen Tech'}],
   openGraph: {
-    title: 'Gonnsen Tech — Your business. Our infrastructure.',
-    description: 'Enterprise web architecture, CRM/CMS software rentals, cloud hosting, and managed IT infrastructure.',
+    title: 'Gonnsen Tech — Your ideas. Built to work.',
+    description: 'We design websites, build business systems, and automate the work that slows you down.',
     type: 'website',
     locale: 'en_US',
     alternateLocale: ['ar_EG'],
@@ -25,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Gonnsen Tech — Your business. Our infrastructure.',
-    description: 'Enterprise web architecture, software rentals, and cloud hosting for Egypt and global businesses.',
+    title: 'Gonnsen Tech — Your ideas. Built to work.',
+    description: 'We design websites, build business systems, and automate the work that slows you down.',
   },
 };
 

@@ -1,6 +1,6 @@
 {
-  "name": "Gonnsen Tech — Architecture & Infrastructure Ecosystem",
-  "description": "Architectural foundation and engineering platform for Gonnsen Tech: enterprise infrastructure, custom web platforms, software rentals, cloud hosting, and managed IT services.",
+  "name": "Gonnsen Tech — Your ideas. Built to work.",
+  "description": "We design websites, build business CRM systems, and automate the work that slows you down. Digital services, software rentals, cloud hosting, and technical maintenance for Egypt and global businesses.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

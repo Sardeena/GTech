@@ -67,16 +67,16 @@ export const SERVICES_CATALOGUE: ServiceVertical[] = [
     titleAr: 'مواقع الويب المخصصة والمتاجر الإلكترونية',
     tagline: 'Fast, modern websites and online shops built to convert visitors into customers.',
     category: 'Web Development',
-    description: 'We build custom websites and online stores that load quickly, look great on phones, and accept payments easily in Egypt and worldwide.',
+    description: 'We design and develop custom websites and online stores planned for fast loading, clean mobile rendering, and seamless checkout for Egypt and global markets.',
     keyDeliverables: [
-      'Fast page speeds built on modern Next.js 15 for a smooth visitor experience',
-      'Local payments with Paymob (cards, Meeza, mobile wallets) and Stripe for global buyers',
-      'Simple content management so your team can update pages whenever you want',
-      'Clean layouts designed to show up properly on Google search'
+      'Architected with Next.js 15 App Router for sub-second page performance',
+      'Designed for dual payment integration: Paymob (Egypt domestic) and Stripe (Global)',
+      'Flexible headless CMS modeling for team content management',
+      'Structured metadata designed for Google search engine visibility'
     ],
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Paymob', 'Stripe'],
-    pricingEgp: 'From 45,000 EGP / project',
-    pricingUsd: 'From $1,800 USD / project',
+    pricingEgp: 'From 45,000 EGP (Proposed)',
+    pricingUsd: 'From $1,800 USD (Proposed)',
   },
   {
     id: 'crm-cms-rentals',
@@ -85,16 +85,16 @@ export const SERVICES_CATALOGUE: ServiceVertical[] = [
     titleAr: 'إيجار برامج إدارة العملاء والمحتوى',
     tagline: 'Ready-to-use business software without huge upfront development costs.',
     category: 'Software Rentals',
-    description: 'Rent ready-made customer management (CRM) and publishing (CMS) tools on monthly plans. We take care of server setups, automatic backups, security updates, and your custom web domain.',
+    description: 'Planned turnkey customer management (CRM) and publishing (CMS) tools on monthly rental plans. Designed with isolated database schemas, automated backups, and custom domains.',
     keyDeliverables: [
-      'Private, separate database space so your customer records stay safe and confidential',
-      'Your own web address (like portal.yourcompany.com) with secure SSL certificates',
-      'Clear sales pipelines, customer history notes, and team task tracking',
-      'Permission controls so team members only see what they need to'
+      'Schema-per-tenant isolation model keeping company databases separate',
+      'Custom subdomain routing (e.g. portal.clientbrand.com) with automated SSL',
+      'Modular sales pipeline, customer records, and task tracking',
+      'Role-based access controls for team security'
     ],
     techStack: ['Multi-Tenant PostgreSQL', 'Node.js', 'Redis', 'Docker', 'REST / GraphQL'],
-    pricingEgp: 'From 1,750 EGP / month',
-    pricingUsd: 'From $65 USD / month',
+    pricingEgp: 'From 1,750 EGP / mo (Proposed)',
+    pricingUsd: 'From $65 USD / mo (Proposed)',
   },
   {
     id: 'custom-apps-automation',
@@ -103,16 +103,16 @@ export const SERVICES_CATALOGUE: ServiceVertical[] = [
     titleAr: 'تطبيقات الأعمال المخصصة والأتمتة',
     tagline: 'Custom tools and automated workflows that eliminate hours of manual work.',
     category: 'Process Automation',
-    description: 'We build internal company tools and connect your daily software together—saving your team time on manual data entry, order matching, inventory tracking, and billing tasks.',
+    description: 'We architect internal business tools and system connectors—designed to reduce manual overhead in order tracking, warehouse updates, and billing preparation.',
     keyDeliverables: [
-      'Clean company dashboards tailored to your daily operations',
-      'Automatic sync between your sales channels, spreadsheets, and warehouses',
-      'Ready for Egyptian Tax Authority (ETA) electronic invoice guidelines',
-      'Helpful automated alerts and notifications for important company events'
+      'Custom company dashboards tailored to day-to-day operations',
+      'Event-driven data sync between spreadsheets, inventory, and orders',
+      'Designed to align with Egyptian Tax Authority (ETA) e-Invoicing guidelines',
+      'Automated email and webhook alerts for critical operational events'
     ],
     techStack: ['TypeScript', 'Next.js Server Actions', 'RabbitMQ / Redis', 'Supabase'],
-    pricingEgp: 'From 55,000 EGP / project',
-    pricingUsd: 'From $2,200 USD / project',
+    pricingEgp: 'From 55,000 EGP (Proposed)',
+    pricingUsd: 'From $2,200 USD (Proposed)',
   },
   {
     id: 'domain-management',
@@ -121,16 +121,16 @@ export const SERVICES_CATALOGUE: ServiceVertical[] = [
     titleAr: 'تسجيل النطاقات وإدارتها',
     tagline: 'Domain names (.com, .eg, and more) with reliable renewals and fast setup.',
     category: 'Domains & DNS',
-    description: 'Register and look after your company web addresses (.com, .net, .eg, .com.eg) with protection against accidental expiry, unauthorized transfers, and website downtime.',
+    description: 'Planned domain registration and DNS management for international TLDs (.com, .net, .tech) and Egyptian domains (.eg, .com.eg) with registrar locks and DNSSEC security.',
     keyDeliverables: [
-      'Security locks to protect against unauthorized domain hijacking or transfers',
-      'Fast, dependable DNS servers so your website loads quickly everywhere',
-      'Privacy settings to keep your personal contact details off public spam lists',
-      'Help with official paperwork for local Egyptian (.eg) domains'
+      'Registrar security lock integration to guard against unauthorized transfers',
+      'Anycast DNS infrastructure for fast worldwide resolution',
+      'WHOIS privacy configuration to protect administrative contact information',
+      'Assistance with documentation requirements for local Egyptian (.eg) domains'
     ],
     techStack: ['Global Anycast DNS', 'DNSSEC', 'ICANN Accredited Protocols', 'REST API'],
-    pricingEgp: 'From 450 EGP / year',
-    pricingUsd: 'From $18 USD / year',
+    pricingEgp: 'From 450 EGP / yr (Proposed)',
+    pricingUsd: 'From $18 USD / yr (Proposed)',
   },
   {
     id: 'hosting-vps',
@@ -139,16 +139,16 @@ export const SERVICES_CATALOGUE: ServiceVertical[] = [
     titleAr: 'استضافة المواقع وخوادم السحابة',
     tagline: 'High-speed cloud servers and hosting with reliable uptime.',
     category: 'Hosting & Servers',
-    description: 'Fast cloud servers (VPS) and managed website hosting. Your files and databases run on dedicated fast storage with quick response times for Egyptian and international visitors.',
+    description: 'High-performance cloud compute (VPS) and managed hosting architecture. Target server nodes deployed with NVMe Gen4 storage and low-latency routing to North Africa and Europe.',
     keyDeliverables: [
-      'Fast solid-state storage and dedicated CPU resources with no overcrowding',
-      'DDoS protection and dedicated IP addresses',
-      'Your choice of full server control or let our team handle everything',
-      'Automatic daily backup copies saved safely off-site'
+      'Dedicated vCPU and NVMe Gen4 storage partitions without overcrowding',
+      'Target dual-stack IPv4 and native IPv6 routing with DDoS filtering',
+      'Flexible administration options: root SSH privilege or fully managed support',
+      'Planned automated off-site snapshot backups'
     ],
     techStack: ['KVM Hypervisors', 'Linux (Ubuntu/Debian/AlmaLinux)', 'NVMe RAID-10', 'BGP Routing'],
-    pricingEgp: 'From 650 EGP / month',
-    pricingUsd: 'From $25 USD / month',
+    pricingEgp: 'From 650 EGP / mo (Proposed)',
+    pricingUsd: 'From $25 USD / mo (Proposed)',
   },
   {
     id: 'maintenance-managed-sla',
@@ -157,16 +157,16 @@ export const SERVICES_CATALOGUE: ServiceVertical[] = [
     titleAr: 'الصيانة والأمان والدعم الفني',
     tagline: 'Reliable engineering support and updates so you never have to worry.',
     category: 'Managed Support',
-    description: 'We keep your website and servers running smoothly with routine security updates, 24/7 uptime monitoring, database checkups, and fast help when an issue occurs.',
+    description: 'Proposed service-level agreements (SLAs) for continuous system maintenance, proactive security patch deployment, regular database health checks, and priority technical support.',
     keyDeliverables: [
-      '24/7 uptime checks with immediate alerts if anything stops working',
-      'Guaranteed 1-hour response time for critical technical emergencies',
-      'Regular software updates and monthly security reviews',
-      'Routine backup drills to ensure your company never loses data'
+      'Planned 24/7 uptime monitoring with rapid incident alerting',
+      'Target 1-hour response commitment for critical severity issues',
+      'Scheduled monthly dependency upgrades and vulnerability checks',
+      'Routine backup recovery testing to verify disaster preparedness'
     ],
     techStack: ['Prometheus', 'Grafana', 'Security Vulnerability Scanners', 'SLA Orchestrator'],
-    pricingEgp: 'From 3,200 EGP / month',
-    pricingUsd: 'From $120 USD / month',
+    pricingEgp: 'From 3,200 EGP / mo (Proposed)',
+    pricingUsd: 'From $120 USD / mo (Proposed)',
   },
 ];
 

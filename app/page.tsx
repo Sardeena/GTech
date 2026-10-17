@@ -5,15 +5,18 @@ import { useRtl } from '@/hooks/useRtl';
 import { TopNavigation } from '@/components/TopNavigation';
 import { HeroSection } from '@/components/HeroSection';
 import { ServicesCatalogue } from '@/components/ServicesCatalogue';
-import { ArchitectureExplorer } from '@/components/ArchitectureExplorer';
-import { DesignTokenShowcase } from '@/components/DesignTokenShowcase';
+import { ServiceDiscoveryGuide } from '@/components/ServiceDiscoveryGuide';
+import { PricingCatalogueSection } from '@/components/PricingCatalogueSection';
+import { HowItWorksSection } from '@/components/HowItWorksSection';
+import { PortfolioShowcaseSection } from '@/components/PortfolioShowcaseSection';
+import { AboutCompanySection } from '@/components/AboutCompanySection';
 import { InquiryForm } from '@/components/InquiryForm';
 import { FooterSection } from '@/components/FooterSection';
 
 export default function Home() {
   const [currency, setCurrency] = useState<'EGP' | 'USD'>('EGP');
   const [locale, setLocale] = useState<'en' | 'ar'>('en');
-  const [selectedServiceId, setSelectedServiceId] = useState<string>('custom-web-ecommerce');
+  const [selectedServiceId, setSelectedServiceId] = useState<string>('web-design');
   const { direction, isRtl } = useRtl(locale);
 
   const handleCurrencyToggle = () => {
@@ -31,15 +34,15 @@ export default function Home() {
     }
   };
 
-  const scrollToEcosystem = () => {
-    const el = document.getElementById('ecosystem');
+  const scrollToServices = () => {
+    const el = document.getElementById('services');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const handleSelectService = (serviceId: string) => {
-    setSelectedServiceId(serviceId);
+  const handleSelectService = (serviceSlug?: string) => {
+    setSelectedServiceId(serviceSlug || 'web-design');
     scrollToContact();
   };
 
@@ -48,7 +51,7 @@ export default function Home() {
       dir={direction}
       className={`min-h-screen bg-[#101310] text-[#EDEDE7] transition-all ${isRtl ? 'font-sans' : ''}`}
     >
-      {/* Top Navigation conforming to Top Bar Contract */}
+      {/* Top Navigation */}
       <TopNavigation
         onInquiryClick={scrollToContact}
         currency={currency}
@@ -58,37 +61,59 @@ export default function Home() {
       />
 
       <main>
-        {/* Editorial Hero Section */}
+        {/* 1. Customer Hero Section */}
         <HeroSection
-          onExploreClick={scrollToEcosystem}
+          onExploreClick={scrollToServices}
           onInquiryClick={scrollToContact}
           locale={locale}
         />
 
-        {/* 6 Core Business Verticals */}
+        {/* 2. Commercial Services Catalogue (6 Categories) */}
         <ServicesCatalogue
           currency={currency}
           locale={locale}
           onSelectService={handleSelectService}
         />
 
-        {/* Interactive Architecture Explorer (3 Surfaces, 12 Schemas, Security, i18n, Roadmap) */}
-        <ArchitectureExplorer
+        {/* 3. Interactive Service Discovery Guide (Replaces internal architecture explorer) */}
+        <ServiceDiscoveryGuide
           currency={currency}
-          onInquiryTrigger={scrollToContact}
+          locale={locale}
+          onSelectService={handleSelectService}
         />
 
-        {/* Custom Design Token & Discipline Proof */}
-        <DesignTokenShowcase />
+        {/* 4. Products & Pricing Catalogue (One-Time, Rentals, Support Retainers) */}
+        <PricingCatalogueSection
+          currency={currency}
+          locale={locale}
+          onSelectService={handleSelectService}
+        />
 
-        {/* Interactive RFP & Technical Intake Form */}
+        {/* 5. How It Works (Simple 5-step customer journey) */}
+        <HowItWorksSection
+          locale={locale}
+          onInquiryClick={scrollToContact}
+        />
+
+        {/* 6. Portfolio & Product Demonstrations */}
+        <PortfolioShowcaseSection
+          locale={locale}
+          onInquiryClick={handleSelectService}
+        />
+
+        {/* 7. About Gonnsen Tech & FAQs */}
+        <AboutCompanySection
+          locale={locale}
+        />
+
+        {/* 8. Contact & Project Inquiry Form (Verified Backend Persistence) */}
         <InquiryForm
           selectedServiceId={selectedServiceId}
           currency={currency}
         />
       </main>
 
-      {/* Quiet Editorial Footer */}
+      {/* Footer */}
       <FooterSection />
     </div>
   );

@@ -184,22 +184,30 @@ export function ArchitectureExplorer({
                   {/* Route Inventory */}
                   <div>
                     <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-3">
-                      Page Links (Next.js 15):
+                      Route Inventory & Implementation Status:
                     </div>
                     <div className="bg-[#101310] border border-[#242D25] rounded p-4 space-y-2 font-mono text-xs text-[#EDEDE7]">
-                      {ECOSYSTEM_SURFACES[selectedSurfaceIndex].routes.map((route, rIdx) => (
-                        <div key={rIdx} className="flex items-center gap-2">
-                          <span className="text-[#C8FF47]">URL</span>
-                          <span>{route}</span>
-                        </div>
-                      ))}
+                      {ECOSYSTEM_SURFACES[selectedSurfaceIndex].routes.map((route, rIdx) => {
+                        const isImplemented = route === '/';
+                        return (
+                          <div key={rIdx} className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2 truncate">
+                              <span className="text-[#C8FF47]">URL</span>
+                              <span className="truncate">{route}</span>
+                            </div>
+                            <span className={`text-[10px] shrink-0 ${isImplemented ? 'text-[#C8FF47] font-semibold' : 'text-[#7E8B7B]'}`}>
+                              {isImplemented ? 'Implemented' : 'Planned'}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
 
                   {/* Architectural Capabilities */}
                   <div>
                     <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-3">
-                      What this platform provides:
+                      Target Architectural Capabilities:
                     </div>
                     <div className="space-y-3">
                       {ECOSYSTEM_SURFACES[selectedSurfaceIndex].capabilities.map((cap, cIdx) => (
@@ -211,6 +219,32 @@ export function ArchitectureExplorer({
                     </div>
                   </div>
                 </div>
+
+                {selectedSurfaceIndex === 2 && (
+                  <div className="mt-6 pt-6 border-t border-[#242D25] grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div className="md:col-span-5 space-y-2">
+                      <div className="text-xs font-mono text-[#C8FF47] uppercase">Engineering Control Room</div>
+                      <h5 className="text-lg font-bold text-[#EDEDE7]">Internal Operations Console</h5>
+                      <p className="text-xs text-[#7E8B7B] leading-relaxed">
+                        Engineers oversee active VPS nodes, run maintenance scripts, and triage customer tickets from a high-security operational terminal.
+                      </p>
+                    </div>
+                    <div className="md:col-span-7 relative h-48 sm:h-56 rounded border border-[#242D25] overflow-hidden bg-[#101310]">
+                      <Image
+                        src="/images/workspace.jpg"
+                        alt="Engineering operations console setup for system administrators"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#101310] via-transparent to-transparent opacity-60" />
+                      <div className="absolute bottom-3 left-3 text-[11px] font-mono text-[#EDEDE7]/90 bg-[#101310]/80 px-2.5 py-1 rounded border border-[#242D25]">
+                        SYSTEMS WORKSPACE · TELEMETRY MONITORING
+                      </div>
+                    </div>
+                  </div>
+                )}
               </motion.div>
 
               {/* Network Topology Graphic */}
@@ -218,24 +252,25 @@ export function ArchitectureExplorer({
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                   <div className="lg:col-span-5">
                     <div className="text-xs font-mono text-[#7E8B7B] uppercase mb-1">
-                      Network Routing
+                      Network Routing Architecture
                     </div>
                     <h4 className="text-xl font-bold text-[#EDEDE7] mb-3">
-                      Fast Link Between North Africa & Europe
+                      Target Routing: North Africa & Europe
                     </h4>
                     <p className="text-xs text-[#EDEDE7]/85 leading-relaxed mb-4">
-                      Gonnsen Tech connects local servers in Cairo with fast European cloud transit via Mediterranean fiber cables. Your websites and apps load quickly whether your customers are in Egypt or overseas.
+                      Planned network architecture connecting Cairo transit points with European data centers via Mediterranean subsea fiber routes. Designed for low latency once live infrastructure is provisioned.
                     </p>
                     <div className="text-xs font-mono text-[#C8FF47]">
-                      Connection Points: Cairo · Alexandria · Marseille · Frankfurt
+                      Target Routing: Cairo · Alexandria · Marseille · Frankfurt
                     </div>
                   </div>
 
                   <div className="lg:col-span-7 relative h-64 rounded border border-[#242D25] overflow-hidden">
                     <Image
-                      src="/src/assets/images/gonnsen_network_topology_1792191987452.jpg"
-                      alt="Network connection map between North Africa and Europe"
+                      src="/images/network.jpg"
+                      alt="Target network architecture diagram connecting North Africa and Europe"
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                       referrerPolicy="no-referrer"
                     />
